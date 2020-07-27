@@ -15,7 +15,22 @@
 
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
-usethis::use_package( "thinkr" )
+usethis::use_package( "shinyjs" )
+usethis::use_package( "shinydashboard" )
+usethis::use_package( "dashboardthemes" )
+# usethis::use_package( "bdutilities.app" )
+usethis::use_package( "DT" )
+usethis::use_package( "leaflet" )
+usethis::use_package( "sp" )
+usethis::use_package( "leaflet.extras" )
+usethis::use_package( "shinyWidgets" )
+usethis::use_package( "dplyr" )
+usethis::use_package( "promises" )
+usethis::use_package( "future" )
+usethis::use_package( "RColorBrewer" )
+
+
+   
 
 ## Add modules ----
 ## Create a module infrastructure in R/

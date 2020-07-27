@@ -16,10 +16,10 @@
 golem::fill_desc(
   pkg_name = "dashboard.experiment", # The Name of the package containing the App 
   pkg_title = "PKG_TITLE", # The Title of the package containing the App 
-  pkg_description = "PKG_DESC.", # The Description of the package containing the App 
-  author_first_name = "AUTHOR_FIRST", # Your First Name
-  author_last_name = "AUTHOR_LAST", # Your Last Name
-  author_email = "AUTHOR@MAIL.COM", # Your Email
+  pkg_description = "This package is to test the scalability of dashboard with large datasets", # The Description of the package containing the App 
+  author_first_name = "Rahul", # Your First Name
+  author_last_name = "Chauhan", # Your Last Name
+  author_email = "rahul.chauhan049@gmail.com", # Your Email
   repo_url = NULL # The URL of the GitHub Repo (optional) 
 )     
 
