@@ -28,14 +28,43 @@ usethis::use_package( "dplyr" )
 usethis::use_package( "promises" )
 usethis::use_package( "future" )
 usethis::use_package( "RColorBrewer" )
+usethis::use_package( "rintrojs" )
+usethis::use_package( "shinyBS" )
+usethis::use_package( "readr" )
+usethis::use_package( "flexdashboard" )
+usethis::use_package( "formattable" )
 
 
    
 
 ## Add modules ----
 ## Create a module infrastructure in R/
-golem::add_module( name = "name_of_module1" ) # Name of the module
-golem::add_module( name = "name_of_module2" ) # Name of the module
+golem::add_module( name = "data_summary" ) # Name of the module
+golem::add_module( name = "missing_data" ) # Name of the module
+golem::add_module( name = "spatial_tab" ) # Name of the module
+golem::add_module( name = "taxonomic_tab" ) # Name of the module
+golem::add_module( name = "temporal_tab" ) # Name of the module
+#Plots
+golem::add_module( name = "leaflet" ) # Name of the module
+golem::add_module( name = "DT" ) # Name of the module
+golem::add_module( name = "plotly_pie" ) # Name of the module
+golem::add_module( name = "plotly_bars" ) # Name of the module
+golem::add_module( name = "plotly_line" ) # Name of the module
+golem::add_module( name = "plotly_bubble" ) # Name of the module
+
+#Field Selector
+golem::add_module( name = "plot_field_selector" ) # Name of the module
+
+#Helper Function
+golem::add_fct( "create_group" ) 
+golem::add_fct( "find_field_for_plot" ) 
+
+
+
+
+
+
+
 
 ## Add helper functions ----
 ## Creates ftc_* and utils_*

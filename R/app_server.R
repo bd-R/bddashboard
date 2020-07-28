@@ -28,5 +28,15 @@ app_server <- function( input, output, session ) {
     callModule(bdutilities.app::mod_darwinize_server,
                "darwinize",
                dat = data_store$input_data)
+  
+  callModule(mod_data_summary_server, "data_summary_ui_1", data_store$darwinized_data)
+  
+  callModule(mod_missing_data_server, "missing_data_ui_1", data_store$darwinized_data)
+  
+  callModule(mod_spatial_tab_server, "spatial_tab_ui_1", data_store$darwinized_data)
+  
+  callModule(mod_taxonomic_tab_server, "taxonomic_tab_ui_1", data_store$darwinized_data)
+  
+  callModule(mod_temporal_tab_server, "temporal_tab_ui_1", data_store$darwinized_data)
 
 }

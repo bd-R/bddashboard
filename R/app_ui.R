@@ -3,8 +3,9 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny shinydashboard dashboardthemes shinyjs bdutilities.app
-#' @import plotly DT leaflet leaflet.extras sp shinyWidgets dplyr
-#' @import promises future RColorBrewer
+#' @import plotly DT leaflet leaflet.extras sp shinyWidgets dplyr 
+#' @import promises future RColorBrewer readr
+#' @import rintrojs shinyBS flexdashboard formattable
 #' @noRd
 
 future::plan(future::multiprocess)
@@ -20,7 +21,36 @@ app_ui <- function(request) {
           "Data Input",
           tabName = "dataInputTab",
           icon = icon("database")
+        ),
+        menuItem(
+          "Data Overview",
+          icon = icon("eye"),
+          menuSubItem(
+            "Data Summary",
+            tabName = "dataSummary"
+          ),
+          menuSubItem(
+            "Missing Data Overview",
+            tabName = "missing_overview"
+          )
+        ),
+        menuItem(
+          "Spatial",
+          tabName = "spatial_tab",
+          icon = icon("eye")
+        ),
+        menuItem(
+          "Taxonomic",
+          tabName = "taxonomic_tab",
+          icon = icon("eye")
+        ),
+        menuItem(
+          "Temporal",
+          tabName = "temporal_tab",
+          icon = icon("eye")
         )
+        
+        
       )
     ),
     dashboardBody(
@@ -34,6 +64,26 @@ app_ui <- function(request) {
           tabName = "dataInputTab",
           bdutilities.app::mod_add_data_ui("bdFileInput"),
           bdutilities.app::mod_darwinize_ui("darwinize")
+        ),
+        tabItem(
+          tabName = "dataSummary",
+          mod_data_summary_ui("data_summary_ui_1")
+        ),
+        tabItem(
+          tabName = "missing_overview",
+          mod_missing_data_ui("missing_data_ui_1")
+        ),
+        tabItem(
+          tabName = "spatial_tab",
+          mod_spatial_tab_ui("spatial_tab_ui_1")
+        ),
+        tabItem(
+          tabName = "taxonomic_tab",
+          mod_taxonomic_tab_ui("taxonomic_tab_ui_1")
+        ),
+        tabItem(
+          tabName = "temporal_tab",
+          mod_temporal_tab_ui("temporal_tab_ui_1")
         )
       )
     )
