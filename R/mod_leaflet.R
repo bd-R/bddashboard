@@ -27,7 +27,7 @@ mod_leaflet_ui <- function(id){
           "Esri.WorldImagery" = "Esri.WorldImagery",
           "Esri.WorldTerrain" = "Esri.WorldTerrain"
         ),
-        selected = "OpenStreetMap.Mapnik"
+        selected = "Stamen.Watercolor"
       )
     ),
     column(
@@ -72,24 +72,24 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
     
     
     
-    # mapLayer <- input$mapLayer
+    mapLayer <- "genus"
     # 
     dat <- data_reactive$data
     # my_palette <-  brewer.pal(9, "Paired")
     # factpal <- colorFactor(my_palette, levels = unique(dat[[mapLayer]]))
     
     # create columns with formatted links
-    # dat$google <- map_url(dat[[mapLayer]], label = "Lookup Google", type = "google")
-    # dat$crossref <- map_url(dat[[mapLayer]], label = "Lookup Crossref", 
-    #                         type = "crossref")
-    # dat$lens <- map_url(dat[[mapLayer]], label = "Lookup Patents", type = "lens")
-    # dat$gbif <- map_url(dat[[mapLayer]], label = "Lookup GBIF", type = "gbif")
-    # 
+    dat$google <- map_url(dat[[mapLayer]], label = "Lookup Google", type = "google")
+    dat$crossref <- map_url(dat[[mapLayer]], label = "Lookup Crossref",
+                            type = "crossref")
+    dat$lens <- map_url(dat[[mapLayer]], label = "Lookup Patents", type = "lens")
+    dat$gbif <- map_url(dat[[mapLayer]], label = "Lookup GBIF", type = "gbif")
+
     # combine links for use as a popup
-    # dat$combined_label <- paste0("<br>", "<strong>", dat[[mapLayer]], 
-    #                              "</strong>", "</br>", "<br>", dat$google, "</br>", "<br>", dat$gbif, 
-    #                              "</br>", "<br>", dat$crossref, "</br>", "<br>", dat$lens, 
-    #                              "</br>")
+    dat$combined_label <- paste0("<br>", "<strong>", dat[[mapLayer]],
+                                 "</strong>", "</br>", "<br>", dat$google, "</br>", "<br>", dat$gbif,
+                                 "</br>", "<br>", dat$crossref, "</br>", "<br>", dat$lens,
+                                 "</br>")
     
     validate(
       need(length(dat)>0, 'Please upload/download a dataset first')
@@ -134,7 +134,8 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
     ) %>%
       addProviderTiles(
         map_texture
-      ) %>% addCircleMarkers(
+      ) %>%
+      addCircleMarkers(
         switch(
           longitudeName,
           "decimalLongitude" = ~decimalLongitude,
@@ -152,8 +153,8 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
         opacity = 0.5,
         fill = TRUE,
         # fillOpacity = 0.2,
-        color = input$mapColor
-        # popup = dat$combined_label
+        color = input$mapColor,
+        popup = dat$combined_label
       ) 
     
     # for(i in unique(dat[[mapLayer]])){
@@ -240,7 +241,6 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
           function(btn, map) {
             var clusterManager =
               map.layerManager.getLayer('cluster', 'quakesCluster');
-            console.log(clusterManager)
             clusterManager.disableClustering();
             btn.state('frozen-markers');
           }")
