@@ -39,7 +39,7 @@ mod_temporal_tab_server <- function(input, output, session, data){
   })
   
   
-  callModule(mod_plotly_bars_server, "plotly_bars_ui_1", data_reactive,  data(), "typeStatus", orientation ="v")
+  callModule(mod_plotly_bars_server, "plotly_bars_ui_1", data_reactive,  data(), "genus", orientation ="v")
   callModule(mod_plotly_bubble_server, "plotly_bubble_ui_1", data_reactive,  data(), "species", "year")
   callModule(mod_plotly_line_server, "plotly_line_ui_1", data_reactive,  data(), "species", "year", "cumulative")
   

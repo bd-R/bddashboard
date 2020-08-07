@@ -12,13 +12,8 @@ mod_plotly_bars_ui <- function(id){
   tagList(
     fluidRow(
       column(
-        3,
+        12,
         mod_plot_field_selector_ui(ns("plot_field_selector_ui_1"))
-      ),
-      column(
-        9,
-        uiOutput(ns("next_ui")),
-        uiOutput(ns("previous_ui"))
       )
     ),
     fluidRow(
@@ -26,10 +21,11 @@ mod_plotly_bars_ui <- function(id){
       uiOutput(ns("back")),
       
       plotlyOutput(ns("plot")),
-      hr()
-    )
-    
-    
+    ),
+    fluidRow(
+      mod_plot_navigation_ui(ns("plot_navigation_ui_1"))
+    ),
+    hr()
   )
 }
 
@@ -46,6 +42,7 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
   
   callModule(mod_plot_field_selector_server, "plot_field_selector_ui_1", data_reactive, preselected, plot_type = "bar" )
   
+  pages <- callModule(mod_plot_navigation_server, "plot_navigation_ui_1", plot, preselected, data_reactive, 10)
   
   
   
@@ -54,16 +51,11 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
       
       column_x <- preselected$new_fields$Select_X
       
-      chunk2 <- function(x,n) split(x, ceiling(seq_along(x)/n)) 
-      a <- chunk2(unique(data_reactive$data[[preselected$new_fields$Select_X]]), 10)
-      
-      if(length(a) < plot$page_number){
-        plot$page_number = 1
-      }
-      
+
       temp_data <-  filter(
         data_reactive$data,
-        data_reactive$data[[ preselected$new_fields$Select_X]] %in% a[[plot$page_number]])
+        data_reactive$data[[ preselected$new_fields$Select_X]] %in% pages()
+      )
       
       if(plot$suspended) {
         observer$resume()

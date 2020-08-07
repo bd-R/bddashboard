@@ -1,6 +1,6 @@
 Package: dashboard.experiment
 Title: PKG_TITLE
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person('Rahul', 'Chauhan', email = 'rahul.chauhan049@gmail.com', role = c('cre', 'aut'))
 Description: This package is to test the scalability of dashboard with large datasets
 License: What license is it under?

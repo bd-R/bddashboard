@@ -44,6 +44,7 @@ golem::add_module( name = "missing_data" ) # Name of the module
 golem::add_module( name = "spatial_tab" ) # Name of the module
 golem::add_module( name = "taxonomic_tab" ) # Name of the module
 golem::add_module( name = "temporal_tab" ) # Name of the module
+
 #Plots
 golem::add_module( name = "leaflet" ) # Name of the module
 golem::add_module( name = "DT" ) # Name of the module
@@ -54,6 +55,9 @@ golem::add_module( name = "plotly_bubble" ) # Name of the module
 
 #Field Selector
 golem::add_module( name = "plot_field_selector" ) # Name of the module
+
+#Navigation For Large Plots
+golem::add_module( name = "plot_navigation" ) # Name of the module
 
 #Helper Function
 golem::add_fct( "create_group" ) 
