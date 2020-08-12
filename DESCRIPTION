@@ -11,6 +11,7 @@ Imports:
     shinyjs,
     shinydashboard,
     dashboardthemes,
+    plotly,
     DT,
     leaflet,
     sp,
