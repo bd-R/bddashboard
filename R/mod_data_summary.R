@@ -183,7 +183,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
       need(length(dataset())>0, 'Please upload/download a dataset first')
     )
     shinydashboard::valueBox(
-      value = countup::countup(nrow(dataset())),
+      value = nrow(dataset()),
       subtitle = "# of Records",
       icon = icon("compass"),
       color = "aqua",
@@ -200,7 +200,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
       need('name' %in% colnames(dataset()), 'No appropriate Column found')
     )
     shinydashboard::valueBox(
-      value = countup::countup(nrow(unique(dataset()["name"]))),
+      value = nrow(unique(dataset()["name"])),
       subtitle = "# of Taxa",
       icon = icon("file-signature"),
       color = "blue",
@@ -213,7 +213,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
       need(length(dataset())>0, 'Please upload/download a dataset first')
     )
     shinydashboard::valueBox(
-      value = countup::countup(length(dataset())),
+      value = length(dataset()),
       subtitle = "# of Attributes",
       icon = icon("area-chart"),
       color = "light-blue",
@@ -310,9 +310,9 @@ mod_data_summary_server <- function(input, output, session, dataset){
     shinydashboard::valueBox(
       
       if(latitude>longitude){
-        value = countup::countup(longitude)
+        value = longitude
       } else {
-        value = countup::countup(latitude)
+        value = latitude
       },
       subtitle = "# of Geo Coordinates",
       icon = icon("compass"),
@@ -344,13 +344,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()[country_code_column_name]
           )
         )
-      )),
+      ),
       subtitle = "# of Countries",
       icon = icon("copyright"),
       color = "navy",
@@ -368,13 +368,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()["locality"]
           )
         )
-      )),
+      ),
       subtitle = "# of Localities",
       icon = icon("street-view"),
       color = "navy",
@@ -396,13 +396,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()["year"]
           )
         )
-      )),
+      ),
       subtitle = "# of Years",
       icon = icon("street-view"),
       color = "navy",
@@ -420,13 +420,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()["month"]
           )
         )
-      )),
+      ),
       subtitle = "# of Years",
       icon = icon("street-view"),
       color = "navy",
@@ -445,13 +445,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()["day"]
           )
         )
-      )),
+      ),
       subtitle = "# of Days",
       icon = icon("street-view"),
       color = "navy",
@@ -474,13 +474,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()["scientificName"]
           )
         )
-      )),
+      ),
       subtitle = "# of Scientific Name",
       icon = icon("street-view"),
       color = "navy",
@@ -498,13 +498,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()["kingdom"]
           )
         )
-      )),
+      ),
       subtitle = "# of Kingdom",
       icon = icon("street-view"),
       color = "navy",
@@ -522,13 +522,13 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     
     shinydashboard::valueBox(
-      value = countup::countup(nrow(
+      value = nrow(
         unique(
           na.omit(
             dataset()["family"]
           )
         )
-      )),
+      ),
       subtitle = "# of Family",
       icon = icon("street-view"),
       color = "navy",

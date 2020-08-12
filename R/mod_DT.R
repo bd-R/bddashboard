@@ -305,7 +305,6 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   
   observeEvent(input[["show"]],{
     first_time <<- TRUE
-    print(length(previously_selected))
     if(length(previously_selected)==0){
       for(i in colnames(data_reactive$data)){
         if(i %in% pre_selected){
@@ -315,7 +314,6 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
         }
       }
     }else{
-      print(paste0("cb_",previously_selected))
       for(i in colnames(data_reactive$data)){
         if(i %in% previously_selected){
           updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
@@ -357,7 +355,6 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   
   filter_selected <- vector()
   output$summary_data_table <- DT::renderDT({
-    print("DT")
     data <- data_reactive$data
     
     future({
