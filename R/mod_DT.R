@@ -38,7 +38,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   ns <- session$ns
   
   # dictionary <- read.csv("data/dictionary.csv")
-  group <- reactive(create_group(dictionary, data_reactive$data))
+  group <- reactive(create_group(dashboard.experiment::dictionary, data_reactive$data))
   
   missing <- vector()
   x <- vector()

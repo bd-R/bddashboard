@@ -35,7 +35,7 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
   ns <- session$ns
   
   
-  group <- reactive(create_group(dictionary, data_reactive$data))
+  group <- reactive(create_group(dashboard.experiment::dictionary, data_reactive$data))
   fields <- reactive(find_field_for_plot(data_reactive$data, plot_type, group()))
   
   
