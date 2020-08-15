@@ -168,31 +168,54 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
               style = "border-radius: 25px;border: 2px solid #828282; height: 67px;",
               column(
                 3,
-                radioButtons(
-                  ns("core_or_default"),
-                  label = "", 
-                  choices = c("Select Default"="default", "Select Core"="core"),
-                  inline = TRUE, selected = 'default'
+                div(
+                  id = "core_default_btn",
+                  actionBttn(
+                    ns("select_default"),
+                    "Select Default",
+                    color = "primary",
+                    style = "fill",
+                    size = "sm"
+                  ),
+                  actionBttn(
+                    ns("select_core"),
+                    "Select Core",
+                    color = "primary",
+                    style = "fill",
+                    size = "sm"
+                  )
                 )
               ),
               column(
                 3,
-                selectInput(
-                  ns("select_input"),
-                  label = "",
-                  choices = c("a","b","c"),
-                  selected = 'a'
+                div(
+                  id = "DT_select_input",
+                  selectInput(
+                    ns("select_input"),
+                    label = "",
+                    choices = c("a","b","c"),
+                    selected = 'a'
+                  )
                 )
               ),
               column(
                 3,
-                checkboxInput(
-                  ns("select_all_checkbox"),
-                  label = "Select/Deselect All",
-                  value = FALSE
+                div(
+                  id = "select_deselect_all_checkbox",
+                  checkboxInput(
+                    ns("select_all_checkbox"),
+                    label = "Select/Deselect All",
+                    value = FALSE
+                  )
+                )
+              ),
+              column(
+                3,
+                div(
+                  id = "DT_field_selec_seltor_icon",
+                  img(src='www/DT_field_selector_icon.png', align = "right")
                 )
               )
-              
             )
           ),
           div(
@@ -257,27 +280,48 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   }, ignoreInit = TRUE)
   
   
-  
-  
-  observeEvent(input$core_or_default,{
-    if(input$core_or_default == "default"){
-      for(i in colnames(data_reactive$data)){
-        if(i %in% pre_selected){
-          updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
-        }else{
-          updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
-        }
-      }
-    }else{
-      for(i in colnames(data_reactive$data)){
-        if(i %in% group()[["core"]]){
-          updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
-        }else{
-          updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
-        }
+  observeEvent(input$select_default,{
+    for(i in colnames(data_reactive$data)){
+      if(i %in% pre_selected){
+        updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
+      }else{
+        updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
       }
     }
-  },ignoreInit = TRUE)
+  })
+  
+  observeEvent(input$select_core,{
+    for(i in colnames(data_reactive$data)){
+      if(i %in% group()[["core"]]){
+        updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
+      }else{
+        updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
+      }
+    }
+  })
+  
+  
+  
+  
+  # observeEvent(input$core_or_default,{
+  #   if(input$core_or_default == "default"){
+  #     for(i in colnames(data_reactive$data)){
+  #       if(i %in% pre_selected){
+  #         updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
+  #       }else{
+  #         updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
+  #       }
+  #     }
+  #   }else{
+  #     for(i in colnames(data_reactive$data)){
+  #       if(i %in% group()[["core"]]){
+  #         updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
+  #       }else{
+  #         updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
+  #       }
+  #     }
+  #   }
+  # },ignoreInit = TRUE)
   
   
   
