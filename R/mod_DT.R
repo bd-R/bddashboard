@@ -212,7 +212,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
               column(
                 3,
                 div(
-                  id = "DT_field_selec_seltor_icon",
+                  id = "DT_field_selector_icon",
                   img(src='www/DT_field_selector_icon.png', align = "right")
                 )
               )

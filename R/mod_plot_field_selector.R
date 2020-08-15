@@ -136,9 +136,16 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
                 )
               ),
               column(
-                3,
+                5,
                 style = "width: 45%; margin-top: 1%;",
                 verbatimTextOutput(ns("field_type"))
+              ),
+              column(
+                2,
+                div(
+                  id="plot_field_selector_icon",
+                  img(src='www/plot_field_selector_icon.png', align = "right")
+                )
               )
             )
           ),
@@ -147,7 +154,6 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
             lapply(names(fields()[[1]]), function(i){
               conditionalPanel(
                 sprintf("input['%s'] == '%s'", ns("columns"), i),
-                
                 fluidRow(
                   lapply(names(fields()), function(j){
                     create_column(j, i)
@@ -193,13 +199,16 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
         ),
         column(
           6,
-          prettyCheckbox(
-            ns(id2),
-            label = col_name,
-            shape = "round", 
-            outline = TRUE, 
-            status = "info",
-            value = selected
+          div(
+            id = "plot_field_selector_radio_btn",
+            prettyCheckbox(
+              ns(id2),
+              label = col_name,
+              shape = "round", 
+              outline = TRUE, 
+              status = "info",
+              value = selected
+            )
           )
         )
       )

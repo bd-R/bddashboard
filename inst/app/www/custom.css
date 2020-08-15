@@ -34,15 +34,31 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
 }
 
 
-#DT_field_selec_seltor_icon{
+#DT_field_selector_icon{
       margin-top: 4.5%;
     width: 120%;
     margin-left: -40%;
 }
     
+#plot_field_selector_icon{
+    margin-top: 8.5%;
+    width: 177%;
+    margin-left: -54%;
+}
+    
+    
+#plot_field_selector_radio_btn{
+  margin-top: 11%;
+}    
 
+#navigation_slider_input {
+    width: 90%;
+    margin-left: 5%;
+}
 
-
+#nav_btn {
+    margin-right: 2%;
+}
 .progressStep li {
     list-style: none;
 }
