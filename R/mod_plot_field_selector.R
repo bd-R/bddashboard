@@ -136,12 +136,7 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
                 )
               ),
               column(
-                5,
-                style = "width: 45%; margin-top: 1%;",
-                verbatimTextOutput(ns("field_type"))
-              ),
-              column(
-                2,
+                4,
                 div(
                   id="plot_field_selector_icon",
                   img(src='www/plot_field_selector_icon.png', align = "right")
@@ -162,8 +157,6 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
               )
             })
           )
-          
-          
         ),
         footer = tagList(
           modalButton("Cancel"),

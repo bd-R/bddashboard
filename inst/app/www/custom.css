@@ -67,6 +67,15 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
     color: #3c8dbc;
 }
 
+
+.map_texture {
+    margin-top: 3%;
+}
+
+#leaflet_contoller {
+    width: 70%;
+    margin-top: 2%;
+}
 #completedIcon img {
     width: 10%;
 }

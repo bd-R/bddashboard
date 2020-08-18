@@ -10,39 +10,35 @@
 mod_leaflet_ui <- function(id){
   ns <- NS(id)
   tagList(
-    column(
-      6,
-      selectInput(
-        ns("mapTexture"),
-        "Map Texture",
-        choices = list(
-          "OpenTopoMap" = "OpenTopoMap",
-          "OpenStreetMap.Mapnik" = "OpenStreetMap.Mapnik",
-          "OpenStreetMap.BlackAndWhite" = "OpenStreetMap.BlackAndWhite",
-          "Stamen.Toner" = "Stamen.Toner",
-          "CartoDB.Positron" = "CartoDB.Positron",
-          "Esri.NatGeoWorldMap" = "Esri.NatGeoWorldMap",
-          "Stamen.Watercolor" = "Stamen.Watercolor",
-          "Stamen.Terrain" = "Stamen.Terrain",
-          "Esri.WorldImagery" = "Esri.WorldImagery",
-          "Esri.WorldTerrain" = "Esri.WorldTerrain"
-        ),
-        selected = "Stamen.Watercolor"
-      )
+    fluidRow(
+      actionBttn(
+        ns("show"),
+        "Leaflet Settings",
+        color = "primary",
+        style = "fill",
+        icon = icon("sliders"), #tasks
+        size = "sm"
+      ),
+      br()
     ),
-    column(
-      6,
-      selectInput(
-        ns("mapColor"),
-        "Points Color",
-        choices = list(
-          "Red" = 'red',
-          "Green" = "green",
-          "Blue" = "blue",
-          "Black" = "black"
-        ),
-        selected = "blue"
-      )
+    fluidRow(
+      br(),
+      leafletOutput(ns("mymap"), height = "400")
+    )
+    
+    # column(
+    #   6,
+    #   selectInput(
+    #     ns("mapColor"),
+    #     "Points Color",
+    #     choices = list(
+    #       "Red" = 'red',
+    #       "Green" = "green",
+    #       "Blue" = "blue",
+    #       "Black" = "black"
+    #     ),
+    #     selected = "blue"
+    #   ),
       # selectInput(
       #   ns("mapLayer"),
       #   "Points Layer",
@@ -50,33 +46,258 @@ mod_leaflet_ui <- function(id){
       #     "kingdom",
       #     "phylum",
       #     "order",
-      #     "family", 
+      #     "family",
       #     "genus",
       #     "species"
       #   ),
       #   selected = "kingdom"
-      #   
+      # 
       # )
-    ),
-    leafletOutput(ns("mymap"), height = "400")
+    # ),
+    
   )
 }
 
 #' leaflet Server Function
 #'
 #' @noRd 
-mod_leaflet_server <- function(input, output, session, data_reactive, data_original){
+mod_leaflet_server <- function(input, output, session, data_reactive, data_original, pre_selected="kingdom"){
   ns <- session$ns
   
+  group <- reactive(create_group(dashboard.experiment::dictionary, data_reactive$data))
+  temp <- list()
+  layer <- reactiveValues(temp=NULL, final=pre_selected)
+  map <- reactiveValues(mapTextureTemp="Stamen.Watercolor", mapTextureFinal="Stamen.Watercolor")
+  mapSkin = list(
+    "OpenTopoMap",
+    "OpenStreetMap.Mapnik",
+    "OpenStreetMap.BlackAndWhite",
+    "Stamen.Toner",
+    "CartoDB.Positron",
+    "Esri.NatGeoWorldMap",
+    "Stamen.Watercolor",
+    "Stamen.Terrain",
+    "Esri.WorldImagery",
+    "Esri.WorldTerrain"
+  )
+  
+  
+  
+  observeEvent(input$show, {
+    showModal(
+      modalDialog(
+        fluidPage(
+          fluidRow(
+            fluidRow(
+              div(
+                style = "border-radius: 25px;border: 2px solid #828282;    margin-bottom: 1%; height: 67px;",
+                column(
+                  4,
+                  radioGroupButtons(
+                    inputId =  ns("columns"),
+                    label = "",
+                    choices = c("Map Texture"="map_texture", "Map Layer"="map_layer"),
+                    checkIcon = list(
+                      yes = icon("check-circle"),
+                      no = icon("circle-o")
+                    ),
+                    selected = "map_texture",
+                    status = "info",
+                    size = "sm",
+                    direction = "horizontal",
+                    individual = TRUE,
+                    justified = TRUE
+                  )
+                ),
+                column(
+                  4,
+                  div(
+                    id="leaflet_contoller",
+                    img(src='www/leaflet_contoller_icon.png', align = "right")
+                  )
+                )
+              )
+            ),
+          ),
+          div(
+            id="field_selector",
+            conditionalPanel(
+              sprintf("input['%s'] == '%s'", ns("columns"), "map_texture"),
+              fluidRow(
+                leafletOutput(ns("mymap_texture"), height = "300")
+              ),
+              fluidRow(
+                
+                  lapply(mapSkin, function(i){
+                    create_button(i)
+                  })
+                
+              )
+            ),
+            conditionalPanel(
+              sprintf("input['%s'] == '%s'", ns("columns"), "map_layer"),
+              fluidRow(
+                lapply(names(group()), function(i){
+                  if(i!="core"){
+                    create_column(i)
+                  }
+                })
+              )
+            )
+          )
+        ),
+        footer = tagList(
+          modalButton("Cancel"),
+          actionButton(ns("ok"), "Save & Exit")
+        )
+      )
+    )
+  })
+  
+  create_button <- function(btn_name){
+    column(
+      3,
+      class = "map_texture",
+      actionBttn(
+        ns(btn_name),
+        btn_name,
+        color = "primary",
+        style = "fill",
+        size = "md"
+      )
+    )
+  }
+  
+  observeEvent(input[["OpenTopoMap"]], {
+    map$mapTextureTemp <- "OpenTopoMap"
+  })
+  
+  observeEvent(input[["OpenStreetMap.Mapnik"]], {
+    map$mapTextureTemp <- "OpenStreetMap.Mapnik"
+  })
+  
+  observeEvent(input[["OpenStreetMap.BlackAndWhite"]], {
+    map$mapTextureTemp <- "OpenStreetMap.BlackAndWhite"
+  })
+  
+  observeEvent(input[["Stamen.Toner"]], {
+    map$mapTextureTemp <- "Stamen.Toner"
+  })
+  
+  observeEvent(input[["CartoDB.Positron"]], {
+    map$mapTextureTemp <- "CartoDB.Positron"
+  })
+  
+  observeEvent(input[["Esri.NatGeoWorldMap"]], {
+    map$mapTextureTemp <- "Esri.NatGeoWorldMap"
+  })
+  
+  observeEvent(input[["Stamen.Watercolor"]], {
+    map$mapTextureTemp <- "Stamen.Watercolor"
+  })
+  
+  observeEvent(input[["Stamen.Terrain"]], {
+    map$mapTextureTemp <- "Stamen.Terrain"
+  })
+  
+  observeEvent(input[["Esri.WorldImagery"]], {
+    map$mapTextureTemp <- "Esri.WorldImagery"
+  })
+  
+  observeEvent(input[["Esri.WorldTerrain"]], {
+    map$mapTextureTemp <- "Esri.WorldTerrain"
+  })
+  
+
+  
+  
+  
+  output$mymap_texture <- renderLeaflet({
+    leaflet(
+    ) %>%
+      addProviderTiles(
+        map$mapTextureTemp
+      ) 
+  })
+  
+  create_column <- function(group_name){
+    column(
+      3,
+      style = "width: 25%; overflow-y:scroll; max-height: 600px; border-radius: 25px; border: 2px solid #828282; height: 600px;",
+      fluidRow(
+        column(
+          12,
+          h4(group_name),
+        )
+      ),
+      lapply(group()[[group_name]], function(i){
+        add_row(paste0("cb_",i), i)
+      })
+    )
+  }
+  
+  
+  add_row <- function(id1, col_name, selected = FALSE){
+    if(col_name %in% colnames(data_reactive$data)){
+      if(col_name == pre_selected){
+        selected = TRUE
+      }
+      fluidRow(
+        column(
+          12,
+          prettyCheckbox(
+            ns(id1),
+            label = col_name,
+            shape = "round", 
+            outline = TRUE, 
+            status = "info",
+            value = selected
+          )
+        )
+      )
+    }
+  }
+  
+  observe({
+    if (!is.null(input$columns)) {
+      lapply(names(data_reactive$data), function(i) {
+        observeEvent(input[[paste0("cb_", i)]], {
+            if(input[[paste0("cb_", i)]]){
+              for(j in names(data_reactive$data)){
+                if(j==i){
+                  layer$temp <<- j
+                }else{
+                  updatePrettyCheckbox(session, paste0("cb_", j), value = FALSE)
+                }
+              }
+              
+            }
+        })
+      })
+    }
+  })
+  
+  observeEvent(input$ok,{
+    map$mapTextureFinal <<- map$mapTextureTemp
+    layer$final <<- layer$temp
+    removeModal()
+  })
+  
+  
+  
+  
+  
+  
   output$mymap <- renderLeaflet({
-    
-    
-    
-    mapLayer <- "genus"
     # 
+    mapLayer <- layer$final
     dat <- data_reactive$data
-    # my_palette <-  brewer.pal(9, "Paired")
-    # factpal <- colorFactor(my_palette, levels = unique(dat[[mapLayer]]))
+    
+    
+    my_palette <-  brewer.pal(9, "Paired")
+    factpal <- colorFactor(my_palette, levels = unique(dat[[mapLayer]]))
+    
+    
     
     # create columns with formatted links
     dat$google <- map_url(dat[[mapLayer]], label = "Lookup Google", type = "google")
@@ -122,7 +343,9 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
             "verbatimLongitude" = dat$verbatimLongitude <- as.numeric(dat$verbatimLongitude),
             "decimalLongitude" = dat$decimalLongitude <- as.numeric(dat$decimalLongitude),
     )
-    map_texture <- input$mapTexture
+    
+    
+    map_texture <- map$mapTextureFinal
     
     # future({
     
@@ -134,8 +357,33 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
     ) %>%
       addProviderTiles(
         map_texture
-      ) %>%
-      addCircleMarkers(
+      ) 
+      # addCircleMarkers(
+      #   switch(
+      #     longitudeName,
+      #     "decimalLongitude" = ~decimalLongitude,
+      #     "verbatimLongitude" = ~verbatimLongitude
+      #   ),
+      #   switch(
+      #     latitudeName,
+      #     "decimalLatitude" = ~decimalLatitude,
+      #     "verbatimLatitude" = ~verbatimLatitude
+      #   ),
+      #   clusterOptions = markerClusterOptions(),
+      #   clusterId = "quakesCluster",
+      #   radius = 1,
+      #   weight = 10,
+      #   opacity = 0.5,
+      #   fill = TRUE,
+      #   # fillOpacity = 0.2,
+      #   color = input$mapColor,
+      #   popup = dat$combined_label
+      # ) 
+    
+    for(i in unique(dat[[mapLayer]])){
+      data = dat[dat[[mapLayer]] == i, ]
+      map <- map %>% addCircleMarkers(
+        data = data,
         switch(
           longitudeName,
           "decimalLongitude" = ~decimalLongitude,
@@ -146,43 +394,19 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
           "decimalLatitude" = ~decimalLatitude,
           "verbatimLatitude" = ~verbatimLatitude
         ),
-        clusterOptions = markerClusterOptions(),
-        clusterId = "quakesCluster",
-        radius = 1,
-        weight = 10,
-        opacity = 0.5,
-        fill = TRUE,
-        # fillOpacity = 0.2,
-        color = input$mapColor,
-        popup = dat$combined_label
-      ) 
-    
-    # for(i in unique(dat[[mapLayer]])){
-    #   data = dat[dat[[mapLayer]] == i, ]
-    #   map <- map %>%addCircleMarkers(
-    #     data = data,
-    #     switch(
-    #       longitudeName,
-    #       "decimalLongitude" = ~decimalLongitude,
-    #       "verbatimLongitude" = ~verbatimLongitude
-    #     ),
-    #     switch(
-    #       latitudeName,
-    #       "decimalLatitude" = ~decimalLatitude,
-    #       "verbatimLatitude" = ~verbatimLatitude
-    #     ),
-    #     clusterOptions = markerClusterOptions(),
-    #     clusterId = "quakesCluster",
-    #     radius = 3, 
-    #     weight = 4,
-    #     opacity = 0.5,
-    #     fill = TRUE, 
-    #     fillOpacity = 0.2,
-    #     color =~factpal(unique(dat[[mapLayer]])),
-    #     group = i,
-    #     popup = dat$combined_label
-    #   )
-    # }
+        clusterOptions = markerClusterOptions(disableClusteringAtZoom=3),
+        # clusterId = "quakesCluster",
+          radius = 1,
+          weight = 10,
+          opacity = 0.5,
+          fill = TRUE,
+          fillOpacity = 0.2,
+          # color = input$mapColor,
+          color = ~factpal(i),
+          group = i,
+          popup = dat$combined_label
+      )
+    }
     
     # names <- unique(dat[[mapLayer]])
     # 
@@ -239,7 +463,8 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
           title="Freeze Clusters",
           onClick = JS("
           function(btn, map) {
-            var clusterManager =
+          console.log(map)
+            var clusterManager = 
               map.layerManager.getLayer('cluster', 'quakesCluster');
             clusterManager.disableClustering();
             btn.state('frozen-markers');
@@ -253,7 +478,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
           function(btn, map) {
             var clusterManager =
               map.layerManager.getLayer('cluster', 'quakesCluster');
-            clusterManager.unfreeze();
+            clusterManager.enableClustering();
             btn.state('unfrozen-markers');
           }")
         )
@@ -267,18 +492,19 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
         rectangleOptions = FALSE,
         circleMarkerOptions = FALSE,
         editOptions = leaflet.extras::editToolbarOptions()
-      ) 
+      ) %>% 
+      addLayersControl(
+        overlayGroups = unique(dat[[mapLayer]]),
+        options = layersControlOptions(collapsed = FALSE)
+      )
     # %>%
     #   addLayersControl(
     #     overlayGroups = unique(dat[[mapLayer]]),
     #     options = layersControlOptions(
     #       collapsed=FALSE
     #     )
-    #   ) 
-    # })
-    
-    
-  })
+    #   )
+    })
   
   
   observeEvent(
