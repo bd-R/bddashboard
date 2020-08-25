@@ -48,89 +48,108 @@ mod_plotly_line_server <- function(input, output, session, data_reactive, data_o
   
   
   output$plot <- renderPlotly({
-    if(!is.null(preselected$new_fields$Select_X)){
-      
-      
-      
-      data <- data_reactive$data
-      column_1 <-  preselected$new_fields$Select_X
-      column_2 <-  preselected$new_fields$Select_Y
-      
-
-      temp_data <-  filter(
-        data_reactive$data,
-        data_reactive$data[[ preselected$new_fields$Select_X]] %in% pages())
-      
-      if(plot$suspended) {
-        observer$resume()
-        plot$suspended <- FALSE
+    
+    validate(
+      need(length(data_original())>0, 'Please upload/download a dataset first')
+    )
+    
+    validate(
+      need(
+        !is.null(preselected$new_fields$Select_X) || !is.null(preselected$new_fields$Select_Y),
+        'Please Select A Column using Field Selector'
+      )
+    )
+    
+    validate(
+      need(preselected$new_fields$Select_X %in% colnames(data_reactive$data), 
+           'Default column X not found in data. Please select another column using Field Selector')
+    )
+    
+    validate(
+      need(preselected$new_fields$Select_Y %in% colnames(data_reactive$data), 
+           'Default column Y not found in data. Please select another column using Field Selector')
+    )
+    
+    
+    data <- data_reactive$data
+    column_1 <-  preselected$new_fields$Select_X
+    column_2 <-  preselected$new_fields$Select_Y
+    
+    
+    temp_data <-  filter(
+      data_reactive$data,
+      data_reactive$data[[ preselected$new_fields$Select_X]] %in% pages())
+    
+    if(plot$suspended) {
+      observer$resume()
+      plot$suspended <- FALSE
+    }
+    
+    future({
+      a <- list()
+      data <- na.omit(temp_data[c(column_1, column_2)])
+      for(i in unique(data[[column_1]])){
+        dat <- filter(data, data[[column_1]]==i)
+        dat <- data.frame(table(dat[[column_2]]), stringsAsFactors = FALSE) 
+        dat <-  dat %>%
+          mutate(cumsum = cumsum(Freq))
+        a[[i]] <- dat
       }
       
-      future({
-        a <- list()
-        data <- na.omit(temp_data[c(column_1, column_2)])
-        for(i in unique(data[[column_1]])){
-          dat <- filter(data, data[[column_1]]==i)
-          dat <- data.frame(table(dat[[column_2]]), stringsAsFactors = FALSE) 
-          dat <-  dat %>%
-            mutate(cumsum = cumsum(Freq))
-          a[[i]] <- dat
-        }
+      pl <- plot_ly(type="scatter", source = ns("tab1"), mode   = 'lines+markers')
+      y_axis_column_name <- "Freq"
+      if(type=="cumulative"){
+        y_axis_column_name = "cumsum"
+      }else{
         
-        pl <- plot_ly(type="scatter", source = ns("tab1"), mode   = 'lines+markers')
-        y_axis_column_name <- "Freq"
-        if(type=="cumulative"){
-          y_axis_column_name = "cumsum"
-        }else{
-          
-        }
-        for(i in names(a)){
-          pl <- add_trace(pl, x=a[[i]]$Var1, y=a[[i]][[y_axis_column_name]], mode = "lines+markers", name = i, key=i)
-        }
-        
-        pl %>%
-          layout(paper_bgcolor = 'transparent',
-                 plot_bgcolor = "transparent",
-                 xaxis = list(
-                   # title = preselected$new_fields$Select_X,
-                   showspikes = TRUE,
-                   spikemode  = 'across',
-                   spikesnap = 'cursor',
-                   spikedash = "solid",
-                   spikecolor = '#ffffff',
-                   spikethickness = 1,
-                   showline=TRUE,
-                   color = "#ffffff",
-                   zeroline = TRUE,
-                   showline = TRUE,
-                   showticklabels = TRUE,
-                   showgrid = FALSE
-                 ),
-                 yaxis = list(
-                   zeroline = FALSE,
-                   showline = TRUE,
-                   title = 'New Confirmed Cases',
-                   color = '#ffffff',
-                   showticklabels = TRUE,
-                   showgrid = TRUE,
-                   gridcolor = toRGB("gray50")
-                 ),
-                 legend = list(
-                   x = 0,
-                   y = 1,
-                   orientation = 'h',
-                   font = list(
-                     color = "#ffffff"
-                   )
-                 ),
-                 showlegend = TRUE,
-                 # hovermode  = 'x',
-                 spikedistance = 300,
-                 hoverdistance = 10
-          )
-      })
+      }
+      for(i in names(a)){
+        pl <- add_trace(pl, x=a[[i]]$Var1, y=a[[i]][[y_axis_column_name]], mode = "lines+markers", name = i, key=i)
+      }
       
-    }
+      pl %>%
+        layout(paper_bgcolor = 'transparent',
+               plot_bgcolor = "transparent",
+               xaxis = list(
+                 # title = preselected$new_fields$Select_X,
+                 showspikes = TRUE,
+                 spikemode  = 'across',
+                 spikesnap = 'cursor',
+                 spikedash = "solid",
+                 spikecolor = '#ffffff',
+                 spikethickness = 1,
+                 showline=TRUE,
+                 color = "#ffffff",
+                 zeroline = TRUE,
+                 showline = TRUE,
+                 showticklabels = TRUE,
+                 showgrid = FALSE
+               ),
+               yaxis = list(
+                 zeroline = FALSE,
+                 showline = TRUE,
+                 title = 'New Confirmed Cases',
+                 color = '#ffffff',
+                 showticklabels = TRUE,
+                 showgrid = TRUE,
+                 gridcolor = toRGB("gray50")
+               ),
+               legend = list(
+                 x = 0,
+                 y = 1,
+                 orientation = 'h',
+                 font = list(
+                   color = "#ffffff"
+                 )
+               ),
+               showlegend = TRUE,
+               # hovermode  = 'x',
+               spikedistance = 300,
+               hoverdistance = 10
+        )
+    })
+    
+    
   })
   
   # populate back button if category is chosen
@@ -155,9 +174,18 @@ mod_plotly_line_server <- function(input, output, session, data_reactive, data_o
 
   observeEvent(input$clear, {
     data_reactive$events[[ns("tab1")]] <- NULL
-    temp_data <- data_original
+    temp_data <- data_original()
     for(val in data_reactive$events){
       temp_data <- temp_data[temp_data[[val[[2]]]] == val[[1]],]
+    }
+    latitudeName <- "verbatimLatitude"
+    if("decimalLatitude" %in% colnames(data_reactive$data))
+    {
+      latitudeName <- "decimalLatitude"
+    }
+    
+    if(!is.null(data_reactive$leaflet_data)){
+      temp_data <- temp_data[temp_data[[latitudeName]] %in% data_reactive$leaflet_data[[latitudeName]],]
     }
     data_reactive$data <- temp_data
   })
@@ -169,10 +197,19 @@ mod_plotly_line_server <- function(input, output, session, data_reactive, data_o
     
     if(!is.null(event)){
       data_reactive$events[[ns("tab1")]] <- list(event$key, preselected$new_fields$Select_X)
-      temp_data <- data_original
+      temp_data <- data_original()
       
       for(val in data_reactive$events){
         temp_data <- temp_data[temp_data[[val[[2]]]] == val[[1]],]
+      }
+      latitudeName <- "verbatimLatitude"
+      if("decimalLatitude" %in% colnames(data_reactive$data))
+      {
+        latitudeName <- "decimalLatitude"
+      }
+      
+      if(!is.null(data_reactive$leaflet_data)){
+        temp_data <- temp_data[temp_data[[latitudeName]] %in% data_reactive$leaflet_data[[latitudeName]],]
       }
       data_reactive$data <- temp_data
     }

@@ -48,7 +48,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   })
   
   observe({
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       updateSliderInput(
         session,
         "split_data_slider",
@@ -61,7 +61,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   })
   
   output$first_page_ui <- renderUI({
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       if(plot$page_number > 1){
         div(
           style ="float:right;padding: 0px 2px 0 2px;",
@@ -85,7 +85,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
 
   
   output$next_ui <- renderUI({
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       a <- chunk2(unique(data_reactive$data[[preselected$new_fields$Select_X]]), input$split_data_slider)
       if(length(a)>1 && plot$page_number < length(a)){
         div(
@@ -109,7 +109,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   })
   
   output$plus_n_ui <- renderUI({
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       a <- chunk2(unique(data_reactive$data[[preselected$new_fields$Select_X]]), input$split_data_slider)
       if((length(a)-plot$page_number) > 10){
         div(
@@ -133,7 +133,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   
   
   output$page_number_ui <- renderUI({
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       a <- chunk2(unique(data_reactive$data[[preselected$new_fields$Select_X]]), input$split_data_slider)
       
       if(length(a) > 1){
@@ -155,7 +155,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   
 
   output$previous_ui <- renderUI({
-    if(!is.null(preselected$new_fields$Select_X) && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       if(plot$page_number > 1){
         div(
           style = "float:right; padding: 0px 2px 0 2px;",
@@ -177,7 +177,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   })
   
   output$minus_n_ui <- renderUI({
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       if(plot$page_number > 10){
         div(
           style = "float:right;padding: 0px 2px 0 2px;",
@@ -198,7 +198,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   })
   
   output$last_page_ui <- renderUI({
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       a <- chunk2(unique(data_reactive$data[[preselected$new_fields$Select_X]]), input$split_data_slider)
       if(plot$page_number < length(a)){
         div(
@@ -216,7 +216,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   })
   
   observeEvent(input$last_page,{
-    if(!is.null(preselected$new_fields$Select_X)  && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       a <- chunk2(unique(data_reactive$data[[preselected$new_fields$Select_X]]), input$split_data_slider)
       plot$page_number = length(a)
     }
@@ -225,7 +225,7 @@ mod_plot_navigation_server <- function(input, output, session, plot, preselected
   
   
   a <- reactive({
-    if(!is.null(preselected$new_fields$Select_X) && length(data_reactive$data)>0){
+    if(preselected$new_fields$Select_X %in% colnames(data_reactive$data)  && length(data_reactive$data)>0){
       a <- chunk2(unique(data_reactive$data[[preselected$new_fields$Select_X]]), input$split_data_slider)
       if(length(a) < plot$page_number){
         plot$page_number = 1

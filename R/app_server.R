@@ -9,6 +9,7 @@ app_server <- function( input, output, session ) {
   
   #Increase Upload limit
   options(shiny.maxRequestSize = 5000 * 1024 ^ 2)
+  options (future.globals.maxSize = 5000 * 1024 ^ 2)
   
   
   data_store <-

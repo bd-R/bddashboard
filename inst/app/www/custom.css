@@ -4,6 +4,11 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
     font-family: 'Nunito Sans', sans-serif;
 }
 
+#data_rows{
+  text-align: center;
+    width: 20%;
+}
+
 .shiny-notification{
     position: fixed;
     top: 33%;
@@ -48,7 +53,14 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
     
     
 #plot_field_selector_radio_btn{
-  margin-top: 11%;
+    margin-top: 11%;
+    float: left;
+    margin-left: 20%;
+}
+
+#DT_field_selector_checkbox {
+    float: left;
+    margin-left: 10%;
 }    
 
 #navigation_slider_input {
@@ -67,14 +79,25 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
     color: #3c8dbc;
 }
 
+.map_texture .bttn {
+    width: 106%;
+    text-align: center;
+}
 
 .map_texture {
     margin-top: 3%;
 }
 
-#leaflet_contoller {
-    width: 70%;
+#leaflet_checkbox {
+    float: left;
+    margin-left: 10%;
     margin-top: 2%;
+}
+
+#leaflet_contoller {
+    width: 100%;
+    margin-top: 3%;
+    margin-left: 105%;
 }
 #completedIcon img {
     width: 10%;

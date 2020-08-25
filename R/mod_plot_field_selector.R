@@ -136,7 +136,12 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
                 )
               ),
               column(
-                4,
+                5,
+                style = "width: 45%; margin-top: 1%;",
+                verbatimTextOutput(ns("field_type"))
+              ),
+              column(
+                2,
                 div(
                   id="plot_field_selector_icon",
                   img(src='www/plot_field_selector_icon.png', align = "right")
@@ -174,7 +179,7 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
   add_row <- function(id1, id2, col_name){
     selected <- FALSE
     if(col_name %in% colnames(data_reactive$data)){
-      if(col_name %in% preselected$default_fields){
+      if(col_name %in% preselected$new_fields){
         selected = TRUE
       }
       
@@ -229,7 +234,7 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
       lapply(names(data_reactive$data), function(i) {
         observeEvent(input[[paste0("cb_", i, input$columns)]], {
           if(input$columns=="Default"){
-            if (i %in% preselected$default_fields) {
+            if (i %in% preselected$new_fields) {
               updatePrettyCheckbox(session, paste0("cb_", i, input$columns), value = TRUE)
             } else{
               updatePrettyCheckbox(session, paste0("cb_", i, input$columns), value = FALSE)

@@ -122,10 +122,14 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
         ),
         column(
           6,
-          checkboxInput(
-            ns(id2),
-            label = col_name,
-            value = selected
+          div(
+            id = "DT_field_selector_checkbox",
+            checkboxInput(
+              ns(id2),
+              label = col_name,
+              value = selected
+            )
+            
           )
         )
       )

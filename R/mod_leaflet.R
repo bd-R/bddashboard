@@ -11,50 +11,27 @@ mod_leaflet_ui <- function(id){
   ns <- NS(id)
   tagList(
     fluidRow(
-      actionBttn(
-        ns("show"),
-        "Leaflet Settings",
-        color = "primary",
-        style = "fill",
-        icon = icon("sliders"), #tasks
-        size = "sm"
-      ),
-      br()
+      column(
+        12,
+        actionBttn(
+          ns("show"),
+          "Leaflet Settings",
+          color = "primary",
+          style = "fill",
+          icon = icon("sliders"), #tasks
+          size = "sm"
+        ),
+        br()
+      )
     ),
     fluidRow(
-      br(),
-      leafletOutput(ns("mymap"), height = "400")
+      column(
+        12,
+        br(),
+        uiOutput(ns("back")),
+        leafletOutput(ns("mymap"), height = "400")
+      )
     )
-    
-    # column(
-    #   6,
-    #   selectInput(
-    #     ns("mapColor"),
-    #     "Points Color",
-    #     choices = list(
-    #       "Red" = 'red',
-    #       "Green" = "green",
-    #       "Blue" = "blue",
-    #       "Black" = "black"
-    #     ),
-    #     selected = "blue"
-    #   ),
-      # selectInput(
-      #   ns("mapLayer"),
-      #   "Points Layer",
-      #   choices = c(
-      #     "kingdom",
-      #     "phylum",
-      #     "order",
-      #     "family",
-      #     "genus",
-      #     "species"
-      #   ),
-      #   selected = "kingdom"
-      # 
-      # )
-    # ),
-    
   )
 }
 
@@ -245,13 +222,16 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
       fluidRow(
         column(
           12,
-          prettyCheckbox(
-            ns(id1),
-            label = col_name,
-            shape = "round", 
-            outline = TRUE, 
-            status = "info",
-            value = selected
+          div(
+            id="leaflet_checkbox",
+            prettyCheckbox(
+              ns(id1),
+              label = col_name,
+              shape = "round", 
+              outline = TRUE, 
+              status = "info",
+              value = selected
+            )
           )
         )
       )
@@ -289,6 +269,10 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
   
   
   output$mymap <- renderLeaflet({
+    
+    validate(
+      need(length(data_original())>0, 'Please upload/download a dataset first')
+    )
     # 
     mapLayer <- layer$final
     dat <- data_reactive$data
@@ -312,9 +296,8 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
                                  "</br>", "<br>", dat$crossref, "</br>", "<br>", dat$lens,
                                  "</br>")
     
-    validate(
-      need(length(dat)>0, 'Please upload/download a dataset first')
-    )
+ 
+    
     latitudeName <- "verbatimLatitude"
     longitudeName <- "verbatimLongitude"
     
@@ -347,9 +330,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
     
     map_texture <- map$mapTextureFinal
     
-    # future({
-    
-    
+    future({
     map <- leaflet(
       data = na.omit(
         dat[c(latitudeName, longitudeName)]
@@ -358,27 +339,6 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
       addProviderTiles(
         map_texture
       ) 
-      # addCircleMarkers(
-      #   switch(
-      #     longitudeName,
-      #     "decimalLongitude" = ~decimalLongitude,
-      #     "verbatimLongitude" = ~verbatimLongitude
-      #   ),
-      #   switch(
-      #     latitudeName,
-      #     "decimalLatitude" = ~decimalLatitude,
-      #     "verbatimLatitude" = ~verbatimLatitude
-      #   ),
-      #   clusterOptions = markerClusterOptions(),
-      #   clusterId = "quakesCluster",
-      #   radius = 1,
-      #   weight = 10,
-      #   opacity = 0.5,
-      #   fill = TRUE,
-      #   # fillOpacity = 0.2,
-      #   color = input$mapColor,
-      #   popup = dat$combined_label
-      # ) 
     
     for(i in unique(dat[[mapLayer]])){
       data = dat[dat[[mapLayer]] == i, ]
@@ -418,21 +378,6 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
     
     
     
-    
-    # addCircles(
-    #   
-    #   switch(
-    #     longitudeName,
-    #     "decimalLongitude" = ~decimalLongitude,
-    #     "verbatimLongitude" = ~verbatimLongitude
-    #   ),
-    #   switch(
-    #     latitudeName,
-    #     "decimalLatitude" = ~decimalLatitude,
-    #     "verbatimLatitude" = ~verbatimLatitude
-    #   ),
-    #   color = map_color
-    # ) %>%
     map %>% fitBounds(
       switch(
         longitudeName,
@@ -455,35 +400,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
         "verbatimLatitude" = ~max(verbatimLatitude)
       )
       
-    ) %>% addEasyButton(easyButton(
-      states = list(
-        easyButtonState(
-          stateName="unfrozen-markers",
-          icon="ion-toggle",
-          title="Freeze Clusters",
-          onClick = JS("
-          function(btn, map) {
-          console.log(map)
-            var clusterManager = 
-              map.layerManager.getLayer('cluster', 'quakesCluster');
-            clusterManager.disableClustering();
-            btn.state('frozen-markers');
-          }")
-        ),
-        easyButtonState(
-          stateName="frozen-markers",
-          icon="ion-toggle-filled",
-          title="UnFreeze Clusters",
-          onClick = JS("
-          function(btn, map) {
-            var clusterManager =
-              map.layerManager.getLayer('cluster', 'quakesCluster');
-            clusterManager.enableClustering();
-            btn.state('unfrozen-markers');
-          }")
-        )
-      )
-    )) %>%
+    ) %>% 
       leaflet.extras::addDrawToolbar(
         targetGroup='draw',
         polylineOptions = FALSE,
@@ -497,14 +414,10 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
         overlayGroups = unique(dat[[mapLayer]]),
         options = layersControlOptions(collapsed = FALSE)
       )
-    # %>%
-    #   addLayersControl(
-    #     overlayGroups = unique(dat[[mapLayer]]),
-    #     options = layersControlOptions(
-    #       collapsed=FALSE
-    #     )
-    #   )
+    
     })
+    
+  })
   
   
   observeEvent(
@@ -593,16 +506,48 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
       
       data_reactive$data <- geo
       data_reactive$leaflet_data <- geo
-      
     })
   
   observeEvent(
     input$mymap_draw_deleted_features,
     {
-      data_reactive$data <- data_original
+      data_reactive$data <- data_original()
       data_reactive$leaflet_data <- NULL
     }
   )
+  
+  output$back <- renderUI({
+    if(!is.null(data_reactive$leaflet_data)){
+      actionBttn(
+        ns("clear"),
+        "Back/Reset",
+        icon("chevron-left"),
+        style = "simple", 
+        color = "primary",
+        size = "sm"
+      )
+    }
+  })
+  
+  observeEvent(input$clear, {
+    data_reactive$leaflet_data <- NULL
+    temp_data <- data_original()
+    latitudeName <- "verbatimLatitude"
+
+    if("decimalLatitude" %in% colnames(data_reactive$data))
+    {
+      latitudeName <- "decimalLatitude"
+    }
+    for(val in data_reactive$events){
+      temp_data <- temp_data[temp_data[[val[[2]]]] == val[[1]],]
+    }
+    if(!is.null(data_reactive$leaflet_data)){
+      temp_data <- temp_data[temp_data[[latitudeName]] %in% data_reactive$leaflet_data[[latitudeName]],]
+    }
+    data_reactive$data <- temp_data
+  })
+  
+  
   
 }
 

@@ -47,55 +47,69 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
   
   
   output$plot <- renderPlotly({
-    if(!is.null(preselected$new_fields$Select_X)){
-      
-      column_x <- preselected$new_fields$Select_X
-      
+    validate(
+      need(length(data_original())>0, 'Please upload/download a dataset first')
+    )
 
-      temp_data <-  filter(
-        data_reactive$data,
-        data_reactive$data[[ preselected$new_fields$Select_X]] %in% pages()
-      )
-      
-      if(plot$suspended) {
-        observer$resume()
-        plot$suspended <- FALSE
-      }
-      
-      
-      future({
-        dat <- as.data.frame(table("a"=temp_data[column_x]))
-        dat
-      }) %...>%
-        
-        
-        plot_ly(
-          x = if(orientation=="v"){~a}else{~Freq},
-          y = if(orientation=="v"){~Freq}else{~a},
-          color = ~a,
-          colors = colorRampPalette(brewer.pal(8, "Set2"))(40),
-          key = ~a,
-          type = "bar",
-          source = ns("tab1")) %...>%
-        layout(
-          paper_bgcolor = 'transparent',
-          plot_bgcolor = "transparent",
-          showlegend = FALSE,
-          xaxis = list(
-            # title = preselected$new_fields$Select_X,
-            color = '#ffffff',
-            zeroline = TRUE,
-            showline = TRUE,
-            showticklabels = TRUE,
-            showgrid = FALSE
-          ),
-          yaxis = list(
-            color = '#ffffff',
-            showticklabels = TRUE,
-            showgrid = FALSE
-          )
-        )
+    validate(
+      need(!is.null(preselected$new_fields$Select_X), 'Please Select A Column using Field Selector')
+    )
+    
+    
+    validate(
+      need(preselected$new_fields$Select_X %in% colnames(data_reactive$data), 
+           'Default column not found in data. Please select another column using Field Selector')
+    )
+    
+    
+    
+    column_x <- preselected$new_fields$Select_X
+    
+    
+    temp_data <-  filter(
+      data_reactive$data,
+      data_reactive$data[[ preselected$new_fields$Select_X]] %in% pages()
+    )
+    
+    if(plot$suspended) {
+      observer$resume()
+      plot$suspended <- FALSE
     }
+    
+    
+    future({
+      dat <- as.data.frame(table("a"=temp_data[column_x]))
+      dat
+    }) %...>%
+      
+      
+      plot_ly(
+        x = if(orientation=="v"){~a}else{~Freq},
+        y = if(orientation=="v"){~Freq}else{~a},
+        color = ~a,
+        colors = colorRampPalette(brewer.pal(8, "Set2"))(40),
+        key = ~a,
+        type = "bar",
+        source = ns("tab1")) %...>%
+      layout(
+        paper_bgcolor = 'transparent',
+        plot_bgcolor = "transparent",
+        showlegend = FALSE,
+        xaxis = list(
+          # title = preselected$new_fields$Select_X,
+          color = '#ffffff',
+          zeroline = TRUE,
+          showline = TRUE,
+          showticklabels = TRUE,
+          showgrid = FALSE
+        ),
+        yaxis = list(
+          color = '#ffffff',
+          showticklabels = TRUE,
+          showgrid = FALSE
+        )
+      )
+    
   })
   
   # populate back button if category is chosen
@@ -165,28 +179,47 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
   })
   
   observeEvent(input$clear, {
+    
+    
+    
     data_reactive$events[[ns("tab1")]] <- NULL
-    temp_data <- data_original
+    temp_data <- data_original()
     for(val in data_reactive$events){
       temp_data <- temp_data[temp_data[[val[[2]]]] == val[[1]],]
+    }
+    
+    latitudeName <- "verbatimLatitude"
+    if("decimalLatitude" %in% colnames(data_reactive$data))
+    {
+      latitudeName <- "decimalLatitude"
+    }
+    
+    if(!is.null(data_reactive$leaflet_data)){
+      temp_data <- temp_data[temp_data[[latitudeName]] %in% data_reactive$leaflet_data[[latitudeName]],]
     }
     data_reactive$data <- temp_data
   })
   
   
   observer <- observeEvent(event_data("plotly_click", source = ns("tab1")), ignoreNULL = FALSE, suspended = TRUE, {
-    
-    
     event <- event_data("plotly_click", source = ns("tab1"))
-    
-    
     
     if(!is.null(event)){
       data_reactive$events[[ns("tab1")]] <- list(event$key, preselected$new_fields$Select_X)
-      temp_data <- data_original
+      temp_data <- data_original()
       
       for(val in data_reactive$events){
         temp_data <- temp_data[temp_data[[val[[2]]]] == val[[1]],]
+      }
+      
+      latitudeName <- "verbatimLatitude"
+      if("decimalLatitude" %in% colnames(data_reactive$data))
+      {
+        latitudeName <- "decimalLatitude"
+      }
+      
+      if(!is.null(data_reactive$leaflet_data)){
+        temp_data <- temp_data[temp_data[[latitudeName]] %in% data_reactive$leaflet_data[[latitudeName]],]
       }
       data_reactive$data <- temp_data
     }

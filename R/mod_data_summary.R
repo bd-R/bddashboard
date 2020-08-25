@@ -167,7 +167,7 @@ mod_data_summary_ui <- function(id){
 mod_data_summary_server <- function(input, output, session, dataset){
   ns <- session$ns
   
-  data_reactive <- reactiveValues(data = data.frame(), events = list())
+  data_reactive <- reactiveValues(data = data.frame(), events = list(), leaflet_data=NULL)
 
   observe({
     dat <- dataset()
@@ -271,7 +271,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
 
   
   
-  callModule(mod_leaflet_server, "leaflet_ui_1", data_reactive,  dataset())
+  callModule(mod_leaflet_server, "leaflet_ui_1", data_reactive,  dataset)
 
   output$map_coordinates <- shinydashboard::renderValueBox({
     dat <- dataset()
@@ -384,7 +384,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
   
 
   #Temporal
-  callModule(mod_plotly_line_server, "plotly_line_ui_1", data_reactive,  dataset(), "kingdom", "year", "daily")
+  callModule(mod_plotly_line_server, "plotly_line_ui_1", data_reactive,  dataset, "kingdom", "year", "daily")
   
   output$temporal_year <- shinydashboard::renderValueBox({
     validate(
@@ -461,7 +461,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
   
   
   #Taxonomic
-  callModule(mod_plotly_bars_server, "plotly_bars_ui_1", data_reactive,  dataset(), "genus", orientation ="h")
+  callModule(mod_plotly_bars_server, "plotly_bars_ui_1", data_reactive,  dataset, "genus", orientation ="h")
   
   
   output$taxonomic_scientificName <- shinydashboard::renderValueBox({

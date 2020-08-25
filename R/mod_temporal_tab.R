@@ -22,6 +22,11 @@ mod_temporal_tab_ui <- function(id){
     ),
     fluidRow(
       mod_plotly_bubble_ui(ns("plotly_line_ui_1"))
+    ),
+    fluidRow(
+      id="data_rows",
+      br(),
+      uiOutput(ns("data_rows_ui"))
     )
   )
 }
@@ -32,16 +37,26 @@ mod_temporal_tab_ui <- function(id){
 mod_temporal_tab_server <- function(input, output, session, data){
   ns <- session$ns
   
-  data_reactive <- reactiveValues(data = data.frame(), events = list())
+  data_reactive <- reactiveValues(data = data.frame(), events = list(), leaflet_data=NULL)
   
   observe({
     data_reactive$data = data()
   })
   
+  output$data_rows_ui <- renderUI({
+    verbatimTextOutput(ns("data_length"))
+  })
   
-  callModule(mod_plotly_bars_server, "plotly_bars_ui_1", data_reactive,  data(), "genus", orientation ="v")
-  callModule(mod_plotly_bubble_server, "plotly_bubble_ui_1", data_reactive,  data(), "species", "year")
-  callModule(mod_plotly_line_server, "plotly_line_ui_1", data_reactive,  data(), "species", "year", "cumulative")
+  output$data_length <- renderText({
+    total_length <- nrow(data())
+    current_length <- nrow(data_reactive$data)
+    paste0("Showing ",current_length,"/",total_length, " rows")
+  })
+  
+  
+  callModule(mod_plotly_bars_server, "plotly_bars_ui_1", data_reactive,  data, "genus", orientation ="v")
+  callModule(mod_plotly_bubble_server, "plotly_bubble_ui_1", data_reactive,  data, "species", "year")
+  callModule(mod_plotly_line_server, "plotly_line_ui_1", data_reactive,  data, "scientificName", "year", "cumulative")
   
   
  
