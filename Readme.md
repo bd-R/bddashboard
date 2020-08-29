@@ -24,7 +24,7 @@ You can install the development version of dashboard.demo from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("bd-R/dashboard.experiment")
+devtools::install_github("rahulchauhan049/dashboard.experiment")
 ```
 
 ``` r
