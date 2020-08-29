@@ -47,6 +47,7 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
   
   
   output$plot <- renderPlotly({
+    
     validate(
       need(length(data_original())>0, 'Please upload/download a dataset first')
     )
@@ -76,6 +77,8 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
       plot$suspended <- FALSE
     }
     
+    title = preselected$new_fields$Select_X
+    
     
     future({
       dat <- as.data.frame(table("a"=temp_data[column_x]))
@@ -96,7 +99,7 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
         plot_bgcolor = "transparent",
         showlegend = FALSE,
         xaxis = list(
-          # title = preselected$new_fields$Select_X,
+          title = title,
           color = '#ffffff',
           zeroline = TRUE,
           showline = TRUE,
