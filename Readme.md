@@ -132,6 +132,22 @@ Without disturbing the reactivity of the page.
 ![Navigation](readme/img/navigation.gif)
 
 
+### Agility
+
+
+To make dashboard work fast and smooth there are hundreds of small and large modules, functions, techniques working together. Our goal was to make this dashboard suitable for big data. I've counted impact of every small changes in milliseconds.
+
+Some of the concept I've used to made dashboard run faster includes, using asynchronous modules to write non-blocking code, I've used clusters in Map to load it faster, prepossing and filtering data before passing it to plot, so that plot has to do less task.
+
+### Performance
+
+
+Some famous packages that are used for implement reactivity between different plots starts suffering with big data, but during testing, we have tested reactivity with 1M data rows. It hardly takes any second to filter all other plots once a plot is clicked. 
+
+Navigation modules also plays a very big role in improving performance. No matter how unique values are there in data, our fail safe mechanism always there to prevent plotting of thousands of bars or lines in a plot which may crash the system.
+
+
+
 Well thats all about the module. Altough bddashboard is made to visualize biodiversity data, these modules will allow user to create their own dashboard. Without worrying about complexity of coding.
 
 dashboard.experiment is tries to show world how easy it become now to create a dashboard.
@@ -139,7 +155,7 @@ dashboard.experiment is tries to show world how easy it become now to create a d
 ## dashboard.experiment Overview
 
 
-### DataInput Tab
+### Data Input Tab
 
 DataInput tab is dedicated for dataset selection. Fill required fields and click on query Database to download records. User can also upload their own dataset.
 
