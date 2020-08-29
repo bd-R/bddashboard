@@ -21,8 +21,8 @@ This project is made completely during Google Summer of Code Program.
 
 ## Installation
 
-You can install the development version of dashboard.demo from
-[GitHub](https://github.com/) with:
+You can install the development version of dashboard.experiment from
+[GitHub](https://github.com/rahulchauhan049/dashboard.experiment) with:
 
 ``` r
 # install.packages("devtools")
@@ -33,13 +33,13 @@ devtools::install_github("rahulchauhan049/dashboard.experiment")
 library("dashboard.experiment)
 ```
 
-## Using dashboard.demo
+## Using dashboard.experiment
 
-Follow these steps to run dashboard.demo
+Follow these steps to run dashboard.experiment
 
 ``` r
 dashboard.experiment::run_app()
-## Run the code to open dashboard.demoexperiment
+## Run the code to open dashboard.experiment
 ```
 
 ## Modules Overview
