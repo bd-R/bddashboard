@@ -17,6 +17,8 @@ The Idea of this project is to add to bdverse a package that will allow users to
 This package, includes different modules that make it reusable and allows user to create their own interactive and reactive dashboard within few minutes
 
 
+This project is made completely during Google Summer of Code Program.
+
 ## Installation
 
 You can install the development version of dashboard.demo from
