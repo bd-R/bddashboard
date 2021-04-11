@@ -50,9 +50,9 @@ Reactivity creates the illusion that changes in input values automatically flow 
 
 In other words, reactive plots are those who are connected with other plots and changes value when other plots are clicked. 
 
-The Old method of implementing reactivity includes using event listeners on each plot and changes other plot when event is occurred. This technique works but become very complex and hard to implement when your start adding new plots. 
+The old method of implementing reactivity includes using event listeners on each plot and changes other plot when event is occurred. This technique works but becomes very complex and hard to implement when you start adding new plots. 
 
-Some packages tried to solve that issue by failed to handle large data.
+Some packages tried to solve that issue but failed to handle large data.
 
 Our plot module allows user to add a new plot and connect it with all the other plot on the dashboard in a reactive manner with just only 1 line of code. 
 
