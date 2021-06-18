@@ -8,7 +8,7 @@
 #' @import rintrojs shinyBS flexdashboard formattable
 #' @noRd
 
-future::plan(future::multiprocess)
+future::plan(future::sequential())
 
 app_ui <- function(request) {
   dashboardPage(
