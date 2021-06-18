@@ -402,6 +402,8 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
       records_percentage
     )
     
+    names(table)[names(table) == 'records_percentage'] <- 'Record Completeness'
+    
     customRed <- "#ff7f7f"
     
     unit.scale = function(x){
