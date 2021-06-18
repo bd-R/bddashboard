@@ -30,7 +30,7 @@ devtools::install_github("rahulchauhan049/dashboard.experiment")
 ```
 
 ``` r
-library("dashboard.experiment)
+library("dashboard.experiment")
 ```
 
 ## Using dashboard.experiment
