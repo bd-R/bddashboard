@@ -413,10 +413,11 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
       DT::datatable(
         data[filter_selected],        
         filter = 'top',
-        extensions = c("ColReorder", "Scroller"),
+        extensions = c('Buttons', "ColReorder", "Scroller"), #'Select', 'SearchPanes'
         options = list(
           scrollX = TRUE,
           dom = "Bfrtip",#'Pfrtip',
+          buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
           colReorder = TRUE,
           deferRender = TRUE,
           scrollY = 500,
