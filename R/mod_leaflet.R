@@ -41,7 +41,7 @@ mod_leaflet_ui <- function(id){
 mod_leaflet_server <- function(input, output, session, data_reactive, data_original, pre_selected="kingdom"){
   ns <- session$ns
   
-  group <- reactive(create_group(dashboard.experiment::dictionary, data_reactive$data))
+  group <- reactive(create_group(bddashboard::dictionary, data_reactive$data))
   temp <- list()
   layer <- reactiveValues(temp=NULL, final=pre_selected)
   map <- reactiveValues(mapTextureTemp="Stamen.Watercolor", mapTextureFinal="Stamen.Watercolor")

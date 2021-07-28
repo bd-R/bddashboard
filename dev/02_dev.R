@@ -92,7 +92,7 @@ usethis::use_test( "app" )
 # Documentation
 
 ## Vignette ----
-usethis::use_vignette("dashboard.experiment")
+usethis::use_vignette("bddashboard")
 devtools::build_vignettes()
 
 ## Code coverage ----
