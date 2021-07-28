@@ -23,16 +23,14 @@ app_ui <- function(request) {
           icon = icon("database")
         ),
         menuItem(
-          "Data Overview",
-          icon = icon("eye"),
-          menuSubItem(
-            "Data Summary",
-            tabName = "dataSummary"
-          ),
-          menuSubItem(
-            "Missing Data Overview",
-            tabName = "missing_overview"
-          )
+          "Data Summary",
+          tabName = "dataSummary",
+          icon = icon("eye")
+        ),
+        menuItem(
+          "Missing Data",
+          tabName = "missing_overview",
+          icon = icon("database")
         ),
         menuItem(
           "Spatial",
@@ -49,8 +47,6 @@ app_ui <- function(request) {
           tabName = "temporal_tab",
           icon = icon("eye")
         )
-        
-        
       )
     ),
     dashboardBody(
