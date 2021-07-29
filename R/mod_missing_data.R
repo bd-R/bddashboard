@@ -97,6 +97,11 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
   ns <- session$ns
   
   output$gauge_one <- flexdashboard::renderGauge({
+    
+    validate(
+      need(length(dataset_missing())>0, 'Please upload/download a dataset first')
+    )
+    
     dat <- dataset_missing()
     if("verbatimLatitude" %in% colnames(dat))
     {
@@ -111,9 +116,11 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     }else {
       longitudeName <- "decimalLatitude"
     }
+    
     validate(
-      need(length(dataset_missing())>0, 'Please upload/download a dataset first')
+      need(longitudeName %in% colnames(df), 'No appropriate Columns with coordiantes data present in Database!')
     )
+    
     df <- dataset_missing()
     
     latitude <- round(
@@ -169,6 +176,10 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
   })
   
   output$gauge_two <- flexdashboard::renderGauge({
+    validate(
+      need(length(df)>0, 'Please upload/download a dataset first')
+    )
+    
     df <- dataset_missing()
     columnName <- 'year'
     if('dateModified' %in% colnames(df)){
@@ -182,9 +193,7 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     } else if('observed_on' %in% colnames(df)){
       columnName <- 'observed_on'
     } 
-    validate(
-      need(length(df)>0, 'Please upload/download a dataset first')
-    )
+    
     validate(
       need(columnName %in% colnames(df), 'No appropriate Column with Date data present in Database!')
     )
@@ -223,6 +232,11 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
   })
   
   output$gauge_three <- flexdashboard::renderGauge({
+    
+    validate(
+      need(length(dataset_missing())>0, 'Please upload/download a dataset first')
+    )
+    
     df <- dataset_missing()
     occurance_column_name <- 'occurrenceID'
     if('uri' %in% colnames(df)){
@@ -230,10 +244,6 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     } else if ('remote_resource' %in% colnames(df)){
       occurance_column_name <- 'remote_resource'
     }
-    
-    validate(
-      need(length(dataset_missing())>0, 'Please upload/download a dataset first')
-    )
     
     validate(
       need(occurance_column_name %in% colnames(df), 'No appropriate Column found with occurance remark data/link')

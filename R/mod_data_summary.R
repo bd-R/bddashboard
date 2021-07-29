@@ -288,9 +288,15 @@ mod_data_summary_server <- function(input, output, session, dataset){
     }else {
       longitudeName <- "decimalLatitude"
     }
+    
     validate(
       need(length(dataset())>0, 'Please upload/download a dataset first')
     )
+    
+    validate(
+      need(longitudeName %in% colnames(df), 'No appropriate Column found.')
+    )
+    
     latitude <- nrow(
       (
         na.omit(
@@ -535,11 +541,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
       width = 4
     )
   })
-  
 
-  
-  
-  
   
   callModule(mod_DT_server, "DT_ui_1", data_reactive, c(
     "countryCode",
@@ -549,10 +551,3 @@ mod_data_summary_server <- function(input, output, session, dataset){
   
  
 }
-    
-## To be copied in the UI
-# mod_data_summary_ui("data_summary_ui_1")
-    
-## To be copied in the server
-# callModule(mod_data_summary_server, "data_summary_ui_1")
- 
