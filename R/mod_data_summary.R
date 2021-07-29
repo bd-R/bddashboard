@@ -184,7 +184,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     shinydashboard::valueBox(
       value = nrow(dataset()),
-      subtitle = "# of Records",
+      subtitle = "NUMBER OF RECORDS",
       icon = icon("compass"),
       color = "aqua",
       width = 1
@@ -201,7 +201,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     shinydashboard::valueBox(
       value = nrow(unique(dataset()["name"])),
-      subtitle = "# of Taxa",
+      subtitle = "NUMBER OF TAXANS",
       icon = icon("file-signature"),
       color = "blue",
       width = 1
@@ -214,7 +214,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     shinydashboard::valueBox(
       value = length(dataset()),
-      subtitle = "# of Attributes",
+      subtitle = "NUMBER OF ATTRIBUTES",
       icon = icon("area-chart"),
       color = "light-blue",
       width = 1
