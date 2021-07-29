@@ -5,7 +5,7 @@
 #' 
 #' @noRd
 app_sys <- function(...){
-  system.file(..., package = "dashboard.experiment")
+  system.file(..., package = "bddashboard")
 }
 
 
