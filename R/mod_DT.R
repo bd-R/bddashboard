@@ -169,7 +169,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
         fluidPage(
           fluidRow(
             div(
-              style = "border-radius: 25px;border: 2px solid #828282; height: 67px;",
+              style = "border-radius: 25px;border: 2px solid #828282; height: 67px; margin-bottom: 20px;",
               column(
                 4,
                 div(
@@ -214,8 +214,9 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
                 )
               ),
               column(
-                4,
+                3,
                 div(
+                  style = "margin-right: 20px;",
                   id = "DT_field_selector_icon",
                   img(src='www/DT_field_selector_icon.png', align = "right")
                 )
