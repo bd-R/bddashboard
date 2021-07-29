@@ -77,8 +77,6 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
       plot$suspended <- FALSE
     }
     
-    title = preselected$new_fields$Select_X
-    
     
     future({
       dat <- as.data.frame(table("a"=temp_data[column_x]))
@@ -99,7 +97,7 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
         plot_bgcolor = "transparent",
         showlegend = FALSE,
         xaxis = list(
-          title = title,
+          title = if(orientation=="v"){column_x}else{"Freq"},
           color = '#ffffff',
           zeroline = TRUE,
           showline = TRUE,
@@ -107,6 +105,7 @@ mod_plotly_bars_server <- function(input, output, session, data_reactive, data_o
           showgrid = FALSE
         ),
         yaxis = list(
+          title = if(orientation=="v"){"Freq"}else{column_x},
           color = '#ffffff',
           showticklabels = TRUE,
           showgrid = FALSE
