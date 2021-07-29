@@ -38,7 +38,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   ns <- session$ns
   
   # dictionary <- read.csv("data/dictionary.csv")
-  group <- reactive(create_group(dashboard.experiment::dictionary, data_reactive$data))
+  group <- reactive(create_group(bddashboard::dictionary, data_reactive$data))
   
   missing <- vector()
   x <- vector()
@@ -414,10 +414,11 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
       DT::datatable(
         data[filter_selected],        
         filter = 'top',
-        extensions = c("ColReorder", "Scroller"),
+        extensions = c('Buttons', "ColReorder", "Scroller"), #'Select', 'SearchPanes'
         options = list(
           scrollX = TRUE,
           dom = "Bfrtip",#'Pfrtip',
+          buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
           colReorder = TRUE,
           deferRender = TRUE,
           scrollY = 500,
