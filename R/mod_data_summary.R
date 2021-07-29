@@ -427,7 +427,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
           )
         )
       ),
-      subtitle = "# of Years",
+      subtitle = "# of Months",
       icon = icon("street-view"),
       color = "navy",
       width = 4
