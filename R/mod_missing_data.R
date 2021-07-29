@@ -65,7 +65,7 @@ mod_missing_data_ui <- function(id){
     ),
     tags$br(),
     tags$br(),
-    h4("List of Important Columns Not Present in Dataset"),
+    h4("Missing Darwin Core Fields"),
     fluidRow(
       tabsetPanel(
         id = ns("second_tabset"),
