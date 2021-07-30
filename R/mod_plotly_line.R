@@ -104,14 +104,14 @@ mod_plotly_line_server <- function(input, output, session, data_reactive, data_o
         
       }
       for(i in names(a)){
-        pl <- add_trace(pl, x=a[[i]]$Var1, y=a[[i]][[y_axis_column_name]], mode = "lines+markers", name = i, key=i)
+        pl <- add_trace(pl, x=as.factor(a[[i]]$Var1), y=a[[i]][[y_axis_column_name]], mode = "lines+markers", name = i, key=i)
       }
       
       pl %>%
         layout(paper_bgcolor = 'transparent',
                plot_bgcolor = "transparent",
                xaxis = list(
-                 # title = preselected$new_fields$Select_X,
+                 title = column_2,
                  showspikes = TRUE,
                  spikemode  = 'across',
                  spikesnap = 'cursor',
@@ -123,12 +123,13 @@ mod_plotly_line_server <- function(input, output, session, data_reactive, data_o
                  zeroline = TRUE,
                  showline = TRUE,
                  showticklabels = TRUE,
-                 showgrid = FALSE
+                 showgrid = FALSE,
+                 tickformat='d'
                ),
                yaxis = list(
                  zeroline = FALSE,
                  showline = TRUE,
-                 title = 'New Confirmed Cases',
+                 title = paste0(column_1, " ", y_axis_column_name),
                  color = '#ffffff',
                  showticklabels = TRUE,
                  showgrid = TRUE,

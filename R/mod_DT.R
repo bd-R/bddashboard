@@ -38,7 +38,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   ns <- session$ns
   
   # dictionary <- read.csv("data/dictionary.csv")
-  group <- reactive(create_group(dashboard.experiment::dictionary, data_reactive$data))
+  group <- reactive(create_group(bddashboard::dictionary, data_reactive$data))
   
   missing <- vector()
   x <- vector()
@@ -171,7 +171,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
             div(
               style = "border: 2px solid #f39c12; height: 67px;",
               column(
-                3,
+                4,
                 div(
                   id = "core_default_btn",
                   actionBttn(
@@ -190,20 +190,20 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
                   )
                 )
               ),
+              # column(
+              #   4,
+              #   div(
+              #     id = "DT_select_input",
+              #     selectInput(
+              #       ns("select_input"),
+              #       label = "",
+              #       choices = c("a","b","c"),
+              #       selected = 'a'
+              #     )
+              #   )
+              # ),
               column(
-                3,
-                div(
-                  id = "DT_select_input",
-                  selectInput(
-                    ns("select_input"),
-                    label = "",
-                    choices = c("a","b","c"),
-                    selected = 'a'
-                  )
-                )
-              ),
-              column(
-                3,
+                4,
                 div(
                   id = "select_deselect_all_checkbox",
                   checkboxInput(
@@ -216,6 +216,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
               column(
                 3,
                 div(
+                  style = "margin-right: 20px;",
                   id = "DT_field_selector_icon",
                   img(src='www/DT_field_selector_icon.png', align = "right")
                 )
@@ -413,10 +414,11 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
       DT::datatable(
         data[filter_selected],        
         filter = 'top',
-        extensions = c("ColReorder", "Scroller"),
+        extensions = c('Buttons', "ColReorder", "Scroller"), #'Select', 'SearchPanes'
         options = list(
           scrollX = TRUE,
           dom = "Bfrtip",#'Pfrtip',
+          buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
           colReorder = TRUE,
           deferRender = TRUE,
           scrollY = 500,

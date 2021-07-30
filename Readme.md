@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# dashboard.experiment
+# bddashboard
 
 <!-- badges: start -->
 
@@ -21,25 +21,25 @@ This project is made completely during Google Summer of Code Program.
 
 ## Installation
 
-You can install the development version of dashboard.experiment from
-[GitHub](https://github.com/rahulchauhan049/dashboard.experiment) with:
+You can install the development version of bddashboard from
+[GitHub](https://github.com/bd-R/bddashboard) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("rahulchauhan049/dashboard.experiment")
+devtools::install_github("bd-R/bddashboard")
 ```
 
 ``` r
-library("dashboard.experiment")
+library("bddashboard")
 ```
 
-## Using dashboard.experiment
+## Using bddashboard
 
-Follow these steps to run dashboard.experiment
+Follow these steps to run bddashboard
 
 ``` r
-dashboard.experiment::run_app()
-## Run the code to open dashboard.experiment
+bddashboard::run_app()
+## Run the code to open bddashboard
 ```
 
 ## Modules Overview
@@ -150,9 +150,9 @@ Navigation modules also plays a very big role in improving performance. No matte
 
 Well thats all about the module. Altough bddashboard is made to visualize biodiversity data, these modules will allow user to create their own dashboard. Without worrying about complexity of coding.
 
-dashboard.experiment is tries to show world how easy it become now to create a dashboard.
+bddashboard is tries to show world how easy it become now to create a dashboard.
 
-## dashboard.experiment Overview
+## bddashboard Overview
 
 
 ### Data Input Tab
@@ -207,6 +207,6 @@ This tab is to visualize time related data.
 
 We have tested this dashboard and all the modules with 1M data records. But bugs are part of programming. If you face any issue, please notify me.
 
-Please submit your feedback using this **[link](https://github.com/rahulchauhan049/dashboard.experiment/issues/new)**
+Please submit your feedback using this **[link](https://github.com/bd-R/bddashboard/issues/new)**
 
    :deciduous_tree: :mushroom: :shell: :fish: :frog: :honeybee: :turtle: :rooster: :whale2: :monkey: :octocat: 

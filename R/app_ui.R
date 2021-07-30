@@ -104,7 +104,7 @@ golem_add_external_resources <- function(){
     favicon(),
     bundle_resources(
       path = app_sys('app/www'),
-      app_title = 'dashboard.experiment'
+      app_title = 'bddashboard'
     ),
     tags$link(rel = "stylesheet", type = "text/css", href = "www/custom.css")
     # Add here other external resources

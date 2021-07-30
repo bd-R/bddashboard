@@ -39,5 +39,31 @@ app_server <- function( input, output, session ) {
   callModule(mod_taxonomic_tab_server, "taxonomic_tab_ui_1", data_store$darwinized_data)
   
   callModule(mod_temporal_tab_server, "temporal_tab_ui_1", data_store$darwinized_data)
-
+  
+  # Logic to prompt the user to both upload/download a dataset and Darwinize it before using the dashboard
+  tabs <- c("dataSummary", "missing_overview", "spatial_tab", "taxonomic_tab", "temporal_tab")
+  
+  observeEvent(input$sideBar, {
+    dat <- data_store$input_data
+    dar <- data_store$darwinized_data
+    
+    
+    if(input$sideBar %in% tabs) {
+      if(length(dat()) == 0 & length(dar()) == 0) {
+        updateTabItems(session, "sideBar", "dataInputTab")
+        showNotification("Please add a dataset and Darwinize it")
+      } else {
+        if(length(dar()) == 0) {
+          updateTabItems(session, "sideBar", "dataInputTab")
+          showNotification("Please Darwinize your dataset")
+        } 
+        if(length(dat()) == 0) { 
+          updateTabItems(session, "sideBar", "dataInputTab")
+          showNotification("Please add a dataset")
+        }
+      }
+    }
+    
+  })
+  
 }
