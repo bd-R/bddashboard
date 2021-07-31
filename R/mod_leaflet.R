@@ -44,7 +44,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
   group <- reactive(create_group(bddashboard::dictionary, data_reactive$data))
   temp <- list()
   layer <- reactiveValues(temp=NULL, final=pre_selected)
-  map <- reactiveValues(mapTextureTemp="Stamen.Watercolor", mapTextureFinal="Stamen.Watercolor")
+  map <- reactiveValues(mapTextureTemp="CartoDB.Positron", mapTextureFinal="CartoDB.Positron")
   mapSkin = list(
     "OpenTopoMap",
     "OpenStreetMap.Mapnik",
@@ -67,7 +67,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
           fluidRow(
             fluidRow(
               div(
-                style = "border-radius: 25px;border: 2px solid #828282;    margin-bottom: 1%; height: 67px;",
+                style = "border: 2px solid #f39c12; margin: 10px; height: 67px;",
                 column(
                   4,
                   radioGroupButtons(
@@ -200,7 +200,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
   create_column <- function(group_name){
     column(
       3,
-      style = "width: 25%; overflow-y:scroll; max-height: 600px; border-radius: 25px; border: 2px solid #828282; height: 600px;",
+      style = "width: 24.7%; overflow-y:scroll; max-height: 600px; border: 2px solid #f39c12; height: 600px; margin-right:4px",
       fluidRow(
         column(
           12,

@@ -116,7 +116,7 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
         fluidPage(
           fluidRow(
             div(
-              style = "border-radius: 25px;border: 2px solid #828282;    margin-bottom: 1%; height: 67px;",
+              style = "border: 2px solid #f39c12;    margin-bottom: 1%; height: 67px;",
               column(
                 4,
                 radioGroupButtons(
@@ -216,7 +216,7 @@ mod_plot_field_selector_server <- function(input, output, session,  data_reactiv
   create_column <- function(group_name, field_name){
     column(
       3,
-      style = "width: 25%; overflow-y:scroll; max-height: 600px; border-radius: 25px; border: 2px solid #828282; height: 600px;",
+      style = "width: 24.7%; overflow-y:scroll; max-height: 600px; border: 2px solid #f39c12; height: 600px; margin-right:4px",
       fluidRow(
         column(
           12,

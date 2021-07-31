@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
 
-body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
+body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo, label, input, button, select, box {
     font-family: 'Nunito Sans', sans-serif;
 }
 
@@ -129,7 +129,8 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
 }
 
 .activeButton .btn .bttn{
-    background-color: orange;
+      background-color: transparent;
+    border: solid #f39c12 1px;
 }
 
 #darwinize-darwinizeButton {
@@ -194,11 +195,6 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
 
 .shiny-input-container:not(.shiny-input-container-inline){
     width: auto;
-}
-
-
-.activeButton .btn{
-    background-color: orange;
 }
 
 
@@ -334,4 +330,263 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo {
 .btn-success:focus {
     background: rgb(0,230,0);
     
+}
+
+
+
+/*-------*/
+
+#shiny-tab-dataInputTab .col-sm-12 {
+  background: rgb(45,55,65);
+} 
+
+.content-wrapper {
+  min-height: 115vh !important;
+}
+
+
+
+.shiny-notification {
+  margin-left: 0px !important;
+  border-radius: 0;
+  border-color: rgb(243 156 18);
+    border-width: 2px;
+}
+
+.progress-bar {
+    background-color: rgb(243 156 18);
+}
+
+.nav-tabs>li>a {
+    border-radius: 0;
+}
+
+.form-control, .selectize-input, .selectize-control.single .selectize-input {
+    border-radius: 0;
+    border-color: rgb(243 156 18);
+  
+}
+
+.btn-default{
+  border-radius: 0;
+  background-color: transparent !important;
+  border: solid 1px orange;
+}
+
+a {
+    color: #d2d6de;
+}
+
+.upload_main .selectize-input {
+  width:250px !important;
+}
+
+.skin-yellow .left-side, .skin-yellow .main-sidebar, .skin-yellow .wrapper {
+  background-color: #000;
+}
+
+.content-wrapper, .right-side {
+    background: #000;
+}
+
+#shiny-tab-dataInputTab .col-sm-12 {
+    background: #000;
+}
+
+.left-side, .main-sidebar {
+  width: 130px !important;
+}
+
+.sidebar-menu span::before {
+  content: "\A \A";
+  white-space: pre;
+}
+
+.sidebar-menu {
+  font-size: 11px;
+}
+
+.sidebar-menu i{
+  font-size: 24px;
+}
+
+.sidebar-menu .active i{
+  font-size: 34px;
+  color:#f39c12;
+  margin-left: -15px;
+}
+
+#sidebarItemExpanded {
+  margin-top: 125px;
+}
+
+.content-wrapper{
+  margin-left: 140px;
+}
+
+.small-box {
+  background: #001f3f!important;
+  border-style: solid;
+  border-width: 2px;
+      border-radius: 0;
+  border-color: #1ebc45!important;
+  padding-left: 20px;
+}
+
+.bg-light-blue h3{
+  color: #fff!important;
+}
+
+.bg-aqua h3{
+  color: #fff!important;
+}
+
+.bg-blue h3 {
+    color: #fff!important;
+}
+
+.bg-aqua{
+  background: #2185d0 !important;
+}
+
+.bg-blue{
+  background: #1ebc45 !important;
+}
+
+.bg-light-blue{
+  background: #e03997 !important;
+}
+
+.sidebar-menu{
+  text-align: center;
+}
+
+.small-box h3, .small-box p {
+    font-size: large;
+    color: rgb(255 255 255 / 88%);
+}
+
+.sidebar-menu a {
+  height: 120px;
+}
+
+.sidebar-menu i{
+  margin-top: 20px;
+}
+
+
+
+
+.small-box h3 {
+    font-size: 85px!important;
+}
+
+.bttn-fill.bttn-primary {
+    background: transparent;
+    color: #fff;
+    padding: 6px 12px;
+    border: orange 1px solid;
+}
+
+.btn-success {
+  border-color: #f39c12;
+  border-width: 2px;
+  background: #f39c12;
+}
+
+.field_selector{
+  width: 22%;
+  margin-right: 1px;
+      border-radius: 0;
+      border: 2px solid #f39c12;
+}
+
+#shiny-modal-wrapper .checkbox input[type=checkbox], #shiny-modal-wrapper .checkbox-inline input[type=checkbox], #shiny-modal-wrapper .radio input[type=radio], #shiny-modal-wrapper .radio-inline input[type=radio] {
+  width: 20px;
+    height: 20px;
+    margin-left: -40px;
+    margin-top: -5px;
+}
+
+.dt-buttons .btn-default {
+  margin-top: 2px;
+  background: transparent;
+  color: white;
+  border: 1px solid #f39c12;
+}
+
+.btn-group-sm>.btn, .btn-sm {
+  border-radius: 0;
+}
+
+.btn-info.active, .btn-info:active, .open>.dropdown-toggle.btn-info {
+      background-color: #f39c12;
+    border-color: #000000;
+}
+
+.irs--shiny .irs-from, .irs--shiny .irs-to, .irs--shiny .irs-single {
+      background-color: #f39c12;
+}
+
+.btn-info {
+    background-color: #f39c12;
+    border-color: #000000;
+}
+
+pre {
+  border-radius: 0;
+  border: 1px solid #f39c12;
+}
+
+.pretty input:checked~.state.p-info-o label:before, .pretty.p-toggle .state.p-info-o label:before{
+  border-color: #f39c12 !important;
+}
+
+.irs--shiny .irs-bar {
+      top: 25px;
+    height: 8px;
+    border-top: 1px solid #f39c12;
+    border-bottom: 1px solid #f39c12;
+    background: #f39c12;
+}
+
+.irs--shiny .irs-bar--single {
+  border-radius: 0;
+}
+.irs--shiny .irs-line{
+  border-radius: 0;
+}
+
+.bttn-gradient.bttn-primary, .bttn-simple.bttn-primary {
+      background: #f39c12;
+}
+
+.btn-file {
+  border: solid 1px #f39c12!important;
+}
+
+.btn-default{
+  color: white;
+}
+
+#nav_btn .bttn-gradient.bttn-sm, .bttn-simple.bttn-sm {
+  margin-top: 3px;
+  font-size: 11px;
+  border-radius: 0;
+}
+
+.sidebar-menu>li>a {
+  padding-left: 0;
+}
+
+.inner {
+  text-align: center;
+}
+
+.btn-default:focus, .action-button:focus{
+  border: solid 1px orange;
+  color: white;
+}
+.small-box>.inner {
+  padding: 5px;
 }

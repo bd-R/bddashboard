@@ -139,7 +139,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   create_column <- function(group_name){
     column(
       2,
-      style = "width: 25%; overflow-y:scroll; max-height: 600px; border-radius: 25px; border: 2px solid #828282; height: 600px;",
+      style = "width: 24.7%; overflow-y:scroll; max-height: 600px; border: 2px solid #f39c12; height: 600px; margin-right:4px;",
       fluidRow(
         column(
           2,
@@ -169,7 +169,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
         fluidPage(
           fluidRow(
             div(
-              style = "border-radius: 25px;border: 2px solid #828282; height: 67px; margin-bottom: 20px;",
+              style = "border: 2px solid #f39c12; height: 67px;",
               column(
                 4,
                 div(
