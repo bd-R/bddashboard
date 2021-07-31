@@ -114,11 +114,11 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     {
       longitudeName <- "verbatimLongitude"
     }else {
-      longitudeName <- "decimalLatitude"
+      longitudeName <- "decimalLongitude"
     }
-    
+
     validate(
-      need(longitudeName %in% colnames(df), 'No appropriate Columns with coordiantes data present in Database!')
+      need(longitudeName %in% colnames(dat), 'No appropriate Columns with coordiantes data present in Database!')
     )
     
     df <- dataset_missing()

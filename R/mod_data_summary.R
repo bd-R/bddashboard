@@ -274,6 +274,10 @@ mod_data_summary_server <- function(input, output, session, dataset){
   callModule(mod_leaflet_server, "leaflet_ui_1", data_reactive,  dataset)
 
   output$map_coordinates <- shinydashboard::renderValueBox({
+    validate(
+      need(length(dataset())>0, 'Please upload/download a dataset first')
+    )
+    
     dat <- dataset()
     if("verbatimLatitude" %in% colnames(dat))
     {
@@ -286,15 +290,11 @@ mod_data_summary_server <- function(input, output, session, dataset){
     {
       longitudeName <- "verbatimLongitude"
     }else {
-      longitudeName <- "decimalLatitude"
+      longitudeName <- "decimalLongitude"
     }
     
     validate(
-      need(length(dataset())>0, 'Please upload/download a dataset first')
-    )
-    
-    validate(
-      need(longitudeName %in% colnames(df), 'No appropriate Column found.')
+      need(longitudeName %in% colnames(dat), 'No appropriate Column found.')
     )
     
     latitude <- nrow(
