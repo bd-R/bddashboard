@@ -40,15 +40,15 @@ mod_data_summary_ui <- function(id){
         introBox(
           bsButton(ns("patients"), 
                    label = "Spatial", 
-                   icon = icon("user"), 
+                   icon = icon("globe"), 
                    style = "success bsButton"),
           bsButton(ns("antimicrobials"), 
                    label = "Temporal", 
-                   icon = icon("spinner", class = "spinner-box"), 
+                   icon = icon("stopwatch"), 
                    style = "success bsButton"),
           bsButton(ns("diagnostics"), 
                    label = "Taxonomic", 
-                   icon = icon("flask", class = "flask-box"), 
+                   icon = icon("paw"), 
                    style = "success bsButton")
         )
       )
@@ -184,7 +184,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     shinydashboard::valueBox(
       value = nrow(dataset()),
-      subtitle = "NUMBER OF RECORDS",
+      subtitle = "# OF RECORDS",
       icon = icon("compass"),
       color = "aqua",
       width = 1
@@ -201,7 +201,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     shinydashboard::valueBox(
       value = nrow(unique(dataset()["name"])),
-      subtitle = "NUMBER OF TAXANS",
+      subtitle = "# OF TAXANS",
       icon = icon("file-signature"),
       color = "blue",
       width = 1
@@ -214,7 +214,7 @@ mod_data_summary_server <- function(input, output, session, dataset){
     )
     shinydashboard::valueBox(
       value = length(dataset()),
-      subtitle = "NUMBER OF ATTRIBUTES",
+      subtitle = "# OF ATTRIBUTES",
       icon = icon("area-chart"),
       color = "light-blue",
       width = 1

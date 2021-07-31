@@ -20,7 +20,7 @@ app_ui <- function(request) {
         menuItem(
           "Data Input",
           tabName = "dataInputTab",
-          icon = icon("database")
+          icon = icon("download")
         ),
         menuItem(
           "Data Summary",
@@ -30,22 +30,22 @@ app_ui <- function(request) {
         menuItem(
           "Missing Data",
           tabName = "missing_overview",
-          icon = icon("database")
+          icon = icon("question")
         ),
         menuItem(
           "Spatial",
           tabName = "spatial_tab",
-          icon = icon("eye")
+          icon = icon("globe")
         ),
         menuItem(
           "Taxonomic",
           tabName = "taxonomic_tab",
-          icon = icon("eye")
+          icon = icon("paw")
         ),
         menuItem(
           "Temporal",
           tabName = "temporal_tab",
-          icon = icon("eye")
+          icon = icon("stopwatch")
         )
       )
     ),
