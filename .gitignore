@@ -1,3 +1,7 @@
+# Created by https://www.toptal.com/developers/gitignore/api/r
+# Edit at https://www.toptal.com/developers/gitignore?templates=r
+
+### R ###
 # History files
 .Rhistory
 .Rapp.history
@@ -7,6 +11,7 @@
 
 # User-specific files
 .Ruserdata
+bdutilities_tom-gu.Rproj
 
 # Example code in package build process
 *-Ex.R
@@ -35,9 +40,13 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
-.DS_Store
-large_data.csv
-xl.csv
-hyenaData.csv
-mammals.csv
-sampledata.csv
+# R Environment Variables
+.Renviron
+
+### R.Bookdown Stack ###
+# R package: bookdown caching files
+/*_files/
+
+# End of https://www.toptal.com/developers/gitignore/api/r
+
+*Rproj
