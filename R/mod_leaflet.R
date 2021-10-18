@@ -15,7 +15,7 @@ mod_leaflet_ui <- function(id){
         12,
         actionBttn(
           ns("show"),
-          "Leaflet Settings",
+          "Map Settings",
           color = "primary",
           style = "fill",
           icon = icon("sliders"), #tasks
