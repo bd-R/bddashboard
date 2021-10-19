@@ -21,6 +21,6 @@ create_group <- function(dictionary, dataset){
       temp <- c(temp,i)
     }
   }
-  t["unlisted"] <- data.frame(temp,stringsAsFactors=FALSE)
+  t["Unlisted"] <- data.frame(temp,stringsAsFactors=FALSE)
   return(t)
 }
