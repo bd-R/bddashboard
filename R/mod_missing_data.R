@@ -390,7 +390,7 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     
     
     output$spatial_missing <- formattable::renderFormattable({
-      table <- data.frame(missing_name)
+      table <- data.frame("Missing Names"=missing_name, check.names = FALSE)
       formattable::formattable(
         table,
         align = c(
@@ -406,10 +406,11 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     })
     
     table <- data.frame(
-      names,
-      total_records,
-      missing_records,
-      records_percentage
+      "Names"=names,
+      "Total Records"=total_records,
+      "Missing Records"=missing_records,
+      "Records Percentage"=records_percentage,
+      check.names = FALSE
     )
     
     customRed <- "#ff7f7f"
@@ -504,7 +505,7 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     }
     
     output$temporal_missing <- formattable::renderFormattable({
-      table <- data.frame(missing_name)
+      table <- data.frame("Missing Names"=missing_name, check.names = FALSE)
       formattable::formattable(
         table,
         align = c(
@@ -521,10 +522,11 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     
     
     table <- data.frame(
-      names,
-      total_records,
-      missing_records,
-      records_percentage
+      "Names"=names,
+      "Total Records"=total_records,
+      "Missing Records"=missing_records,
+      "Records Percentage"=records_percentage,
+      check.names = FALSE
     )
     
     customRed <- "#ff7f7f"
@@ -624,7 +626,7 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     }
     
     output$taxonomic_missing <- formattable::renderFormattable({
-      table <- data.frame(missing_name)
+      table <- data.frame("Missing Names"=missing_name, check.names = FALSE)
       formattable::formattable(
         table,
         align = c(
@@ -640,10 +642,11 @@ mod_missing_data_server <- function(input, output, session, dataset_missing){
     })
     
     table <- data.frame(
-      names,
-      total_records,
-      missing_records,
-      records_percentage
+      "Names"=names,
+      "Total Records"=total_records,
+      "Missing Records"=missing_records,
+      "Records Percentage"=records_percentage,
+      check.names = FALSE
     )
     
     customRed <- "#ff7f7f"

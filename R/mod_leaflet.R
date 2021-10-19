@@ -15,7 +15,7 @@ mod_leaflet_ui <- function(id){
         12,
         actionBttn(
           ns("show"),
-          "Leaflet Settings",
+          "",
           color = "primary",
           style = "fill",
           icon = icon("sliders"), #tasks
@@ -44,7 +44,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
   group <- reactive(create_group(bddashboard::dictionary, data_reactive$data))
   temp <- list()
   layer <- reactiveValues(temp=NULL, final=pre_selected)
-  map <- reactiveValues(mapTextureTemp="CartoDB.Positron", mapTextureFinal="CartoDB.Positron")
+  map <- reactiveValues(mapTextureTemp="OpenTopoMap", mapTextureFinal="OpenTopoMap")
   mapSkin = list(
     "OpenTopoMap",
     "OpenStreetMap.Mapnik",
