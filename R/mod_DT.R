@@ -18,7 +18,7 @@ mod_DT_ui <- function(id){
     ),
     actionBttn(
       ns("show"),
-      "Table Field Selector",
+      "",
       color = "primary",
       style = "fill",
       icon = icon("tasks"), #tasks
@@ -46,7 +46,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   a <- vector()
   previously_selected <- vector()
   first_time_pre_selected <- TRUE
-  
+  selectAll <- FALSE
   
   
   name_with_missing_number <- reactive({
@@ -172,22 +172,16 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
               style = "border: 2px solid #f39c12; height: 67px;",
               column(
                 4,
-                div(
-                  id = "core_default_btn",
-                  actionBttn(
-                    ns("select_default"),
-                    "Select Default",
-                    color = "primary",
-                    style = "fill",
-                    size = "sm"
-                  ),
-                  actionBttn(
-                    ns("select_core"),
-                    "Select Core",
-                    color = "primary",
-                    style = "fill",
-                    size = "sm"
-                  )
+                radioGroupButtons(
+                  inputId =  ns("selections"),
+                  label = "",
+                  choices = c("Select Default"="select_default","Select Core"="select_core"),
+                  selected = "select_default",
+                  status = "info",
+                  size = "sm",
+                  direction = "horizontal",
+                  individual = TRUE,
+                  justified = TRUE
                 )
               ),
               # column(
@@ -205,11 +199,11 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
               column(
                 4,
                 div(
-                  id = "select_deselect_all_checkbox",
-                  checkboxInput(
+                  style = "margin-top:1%",
+                  id = "btn-info",
+                  actionButton(
                     ns("select_all_checkbox"),
-                    label = "Select/Deselect All",
-                    value = FALSE
+                    "Select/Deselect All"
                   )
                 )
               ),
@@ -270,10 +264,33 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
   })
   
   
+ 
+  
+  observeEvent(input$selections,{
+    if(input$selections=="select_default"){
+      for(i in colnames(data_reactive$data)){
+        if(i %in% pre_selected){
+          updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
+        }else{
+          updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
+        }
+      }
+    }else{
+      for(i in colnames(data_reactive$data)){
+        if(i %in% group()[["core"]]){
+          updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
+        }else{
+          updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
+        }
+      }
+    }
+  })
+  
   
   
   observeEvent(input$select_all_checkbox,{
-    if(input$select_all_checkbox){
+    selectAll <<- !selectAll
+    if(selectAll){
       for(i in names(group())){
         updateCheckboxInput(session, paste0("check_select_",i), value = TRUE)
       }
@@ -282,29 +299,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
         updateCheckboxInput(session, paste0("check_select_",i), value = FALSE)
       }
     }
-  }, ignoreInit = TRUE)
-  
-  
-  observeEvent(input$select_default,{
-    for(i in colnames(data_reactive$data)){
-      if(i %in% pre_selected){
-        updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
-      }else{
-        updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
-      }
-    }
   })
-  
-  observeEvent(input$select_core,{
-    for(i in colnames(data_reactive$data)){
-      if(i %in% group()[["core"]]){
-        updateCheckboxInput(session, paste0("cb_",i), value = TRUE)
-      }else{
-        updateCheckboxInput(session, paste0("cb_",i), value = FALSE)
-      }
-    }
-  })
-  
   
   
   
@@ -343,7 +338,6 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
     }
     if (is.null(x))
       x <- character(0)
-    
     updateCheckboxGroupInput(session, "checkboxgroup_spatial",
                              label = paste("Checkboxgroup label", length(x)),
                              choices = choices,
