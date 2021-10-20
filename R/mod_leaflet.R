@@ -278,7 +278,7 @@ mod_leaflet_server <- function(input, output, session, data_reactive, data_origi
     dat <- data_reactive$data
     
     
-    my_palette <-  brewer.pal(9, "Paired")
+    my_palette <-  brewer.pal(9, "Set3")
     factpal <- colorFactor(my_palette, levels = unique(dat[[mapLayer]]))
     
     
