@@ -1,9 +1,34 @@
 Package: bddashboard
-Title: PKG_TITLE
+Title: An agile framework for biodiversity dashboards
+Description: Key functionality for generating robust yet flexible biodiversity dashboards in Shiny.
 Version: 0.1.1
-Authors@R: person('Rahul', 'Chauhan', email = 'rahul.chauhan049@gmail.com', role = c('cre', 'aut'))
-Description: This package is to test the scalability of dashboard with large datasets
-License: What license is it under?
+License: GPL-3 | file LICENSE
+URL: https://github.com/bd-R/bddashboard
+BugReports: https://github.com/bd-R/bddashboard/issues
+Authors@R: c(
+    person(
+        "Rahul", "Chauhan",
+        email = "rahul.chauhan049@gmail.com",
+        role = c("aut", "cre")),
+    person(
+        "Rahul", "Saxena",
+        email = "b417033@iiit-bh.ac.in",
+        role = c("aut")),
+    person(
+        "Thiloshon", "Nagarajah",
+        email = "thiloshon@gmail.com",
+        role = c("aut")),
+    person(
+        "Tomer", "Gueta", 
+        email = "tomer.gu@gmail.com",
+        role = c("aut"),
+        comment = c(ORCID = '0000-0003-1557-8596')),
+    person(
+        "Vijay", "Barve", ,
+        email = "vijay.barve@gmail.com", 
+        role = c("aut"),
+        comment = c(ORCID = '0000-0002-4852-2567'))
+    )
 Imports: 
     config,
     golem,
