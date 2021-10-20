@@ -40,9 +40,8 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo, 
 
 
 #DT_field_selector_icon{
-      margin-top: 4.5%;
+      margin-top: 3.5%;
     width: 120%;
-    margin-left: -40%;
 }
     
 #plot_field_selector_icon{

@@ -177,6 +177,10 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
                   label = "",
                   choices = c("Select Default"="select_default","Select Core"="select_core"),
                   selected = "select_default",
+                  checkIcon = list(
+                    yes = icon("check-circle"),
+                    no = icon("circle-o")
+                  ),
                   status = "info",
                   size = "sm",
                   direction = "horizontal",
@@ -199,7 +203,7 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
               column(
                 4,
                 div(
-                  style = "margin-top:1%",
+                  style = "margin-top:3.4%",
                   id = "btn-info",
                   actionButton(
                     ns("select_all_checkbox"),
@@ -210,7 +214,6 @@ mod_DT_server <- function(input, output, session, data_reactive, pre_selected){
               column(
                 3,
                 div(
-                  style = "margin-right: 20px;",
                   id = "DT_field_selector_icon",
                   img(src='www/DT_field_selector_icon.png', align = "right")
                 )
