@@ -18,7 +18,7 @@ mod_plot_field_selector_ui <- function(id){
     ),
     actionBttn(
       ns("show"),
-      "Show Field Selector",
+      "",
       color = "primary",
       style = "fill",
       icon = icon("sliders"), #tasks

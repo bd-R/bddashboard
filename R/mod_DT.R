@@ -18,7 +18,7 @@ mod_DT_ui <- function(id){
     ),
     actionBttn(
       ns("show"),
-      "Table Field Selector",
+      "",
       color = "primary",
       style = "fill",
       icon = icon("tasks"), #tasks
