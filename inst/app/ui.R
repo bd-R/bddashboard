@@ -1,0 +1,1 @@
+bddashboard:::app_ui()
