@@ -18,7 +18,7 @@ body, .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, .main-header .logo, 
 }
 
 #field_selector .progress-bar {
-    background-color: orange;
+    background-color: #364A53;
 }
 
 .progress-group {
@@ -424,8 +424,8 @@ a {
 }
 
 .small-box {
-  background: #001f3f!important;
-  border-style: solid;
+  background: #001f3f!important
+  border-style: none;
   border-width: 2px;
       border-radius: 0;
   border-color: #1ebc45!important;
@@ -449,11 +449,11 @@ a {
 }
 
 .bg-blue{
-  background: #1ebc45 !important;
+  background: #001f3f!important
 }
 
 .bg-light-blue{
-  background: #e03997 !important;
+  background: #05668d !important;
 }
 
 .sidebar-menu{
@@ -514,6 +514,14 @@ a {
   border: 1px solid #f39c12;
 }
 
+svg path{
+  fill: #2185d0
+}
+
+.html-widget.gauge svg{
+  height: 100%;
+}
+
 .btn-group-sm>.btn, .btn-sm {
   border-radius: 0;
 }
@@ -524,7 +532,7 @@ a {
 }
 
 .irs--shiny .irs-from, .irs--shiny .irs-to, .irs--shiny .irs-single {
-      background-color: #f39c12;
+      background-color: #364A53;
 }
 
 .btn-info {
@@ -544,9 +552,9 @@ pre {
 .irs--shiny .irs-bar {
       top: 25px;
     height: 8px;
-    border-top: 1px solid #f39c12;
-    border-bottom: 1px solid #f39c12;
-    background: #f39c12;
+    border-top: 1px solid #364A53;
+    border-bottom: 1px solid #364A53;
+    background: #364A53;
 }
 
 .irs--shiny .irs-bar--single {
@@ -557,11 +565,11 @@ pre {
 }
 
 .bttn-gradient.bttn-primary, .bttn-simple.bttn-primary {
-      background: #f39c12;
+      background: #364A53;
 }
 
 .btn-file {
-  border: solid 1px #f39c12!important;
+  border: solid 1px #364A53!important;
 }
 
 .btn-default{
